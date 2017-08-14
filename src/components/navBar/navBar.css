@@ -1,0 +1,14 @@
+.nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 50px;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    padding: 10px 30px;
+
+    margin: 0px;
+}
+
