@@ -12,7 +12,7 @@ import SuggestionBar from './components/suggestionBar/SuggestionBar'
 
 import './app.css'
 
-const apiKey = `AIzaSyAGe9XCQwCwMou1ZmanPOHB-aWo9nZES20`;
+const apiKey = `AIzaSyAGe9XCQwCwMou1ZmanPOHB-aWo9nZES20`
 
 
 class App extends Component {
@@ -21,12 +21,15 @@ class App extends Component {
         super() 
 
         this.state = {
-          browsing: "false"
+          browsing: "false",
+          vides: [],
+          selectedVideo: {}
         }
 
         this.videoSearch('last week tonight')
 
         this.handleScroll = this.handleScroll.bind(this)
+        this.videoSearch = this.videoSearch.bind(this)
     }
 
     componentDidMount() {
@@ -54,10 +57,13 @@ class App extends Component {
     }
 
 
+
+
   render() {
+    console.log(this.state.selectedVideo)
     return (
       <div className="App" >
-      <VideoPlayer minify={this.state.browsing} />
+      <VideoPlayer minify={this.state.browsing} video={this.state.selectedVideo} />
         <div className='card-grid'>
           <div className='video-player-placeholder'></div>
           <VideoInfo browse={this.state.browsing} />
@@ -68,7 +74,7 @@ class App extends Component {
 
         <NavBar />
       </div>
-    );
+    )
   }
 }
 

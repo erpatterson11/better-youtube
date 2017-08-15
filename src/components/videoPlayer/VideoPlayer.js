@@ -4,13 +4,9 @@ import './videoPlayer.css'
 
 
 
-export default class VideoPlayer extends Component {
-    constructor(props) {
-        super(props) 
-        console.log(this.props.minify)
-    }
+const VideoPlayer = ({video, minify}) => {
 
-    browseStyle = {
+    const browseStyle = {
         position: "fixed",
         right: 0,
         bottom: 0,
@@ -18,12 +14,19 @@ export default class VideoPlayer extends Component {
         height: "200px"
     }
 
+    let id
 
-    render() {
-        return (
-            <div className="video-player-container card" style={this.props.minify ? this.browseStyle : null} >
-                <video className={`video-player`}  src="https://player.vimeo.com/external/194837908.sd.mp4?s=c350076905b78c67f74d7ee39fdb4fef01d12420&profile_id=164" />
-            </div>
-        )
+    if (video.id) {
+        id = video.id.videoId
     }
+
+    const url = `https://www.youtube.com/embed/${id}`
+
+    return (
+        <div className="video-player-container card" style={minify ? browseStyle : null} >
+            <iframe className={`video-player`}  src={url} />
+        </div>
+    )
 }
+
+export default VideoPlayer

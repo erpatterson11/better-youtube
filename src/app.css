@@ -1,6 +1,7 @@
 .App {
   height: 300vh;
   margin-left: 40px;
+  font-family: 'Roboto', sans-serif;
 }
 
 .card-grid {
