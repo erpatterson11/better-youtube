@@ -1,29 +1,33 @@
 .App {
-  height: 300vh;
   margin-left: 40px;
+  margin-bottom: 10px;
   font-family: 'Roboto', sans-serif;
 }
 
-.card-grid {
-  display: grid;
-  grid-template-rows: 480px 150px 122px 2623px;
-  grid-template-columns: 854px 416px;
-  grid-template-areas: "video suggestions"
-                      "video-info suggestions"
-                      "video-description suggestions"
-                      "comments browse";
-  grid-gap: 10px;
-
-  margin-top: 60px;
+.video-player {
+    width: 856px;
+    height: 480px;
+    border: none;
+    box-shadow: 0 1px 2px rgba(0,0,0,.1);
 }
-
 
 .video-player-placeholder {
   grid-area: video;
 }
 
-.video-player {
-    width: 856px;
-    transition: 1s;
-    box-shadow: 0 1px 2px rgba(0,0,0,.1);
+
+/* ///////////////////////////////////////////
+          Media Queries
+////////////////////////////////////////////*/
+
+
+@media (max-width: 1200px) {
+  .App {
+    margin-left: 10px;
+  }
+
+  .video-player {
+    width: 640px;
+    height: 360px;
+  }
 }

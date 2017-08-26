@@ -5,14 +5,15 @@ import './videoInfo.css'
 
 
 export default class VideoInfo extends Component {
-    constructor(props) {
-        super(props) 
-    }
-    
+   
 
     render() {
+
+        {console.log(this.props.vidInfo)}
+
         return (
             <div className="video-info card">
+                <p> </p>
             </div>
         )
     }

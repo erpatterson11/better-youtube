@@ -1,18 +1,22 @@
+// modules
 import React, { Component } from 'react'
-import YTSearch from 'youtube-api-search'
+import axios from 'axios'
+import {HashRouter as Router, Route, Switch} from 'react-router-dom'
 
-import NavBar from './components/navBar/NavBar'
+
+// components
 import VideoPlayer from './components/videoPlayer/VideoPlayer'
-import VideoInfo from './components/videoInfo/VideoInfo'
-import Comments from './components/comments/Comments'
-import SideMenu from './components/sideMenu/SideMenu'
-import SuggestionBar from './components/suggestionBar/SuggestionBar'
+import VideoPage from './components/videoPage/VideoPage'
+import NavBar from './components/navBar/NavBar'
 
 
-
+// css
 import './app.css'
 
+
+// other
 const apiKey = `AIzaSyAGe9XCQwCwMou1ZmanPOHB-aWo9nZES20`
+
 
 
 class App extends Component {
@@ -21,12 +25,12 @@ class App extends Component {
         super() 
 
         this.state = {
-          browsing: "false",
+          browsing: false,
           vides: [],
           selectedVideo: {}
         }
 
-        this.videoSearch('last week tonight')
+        this.videoSearch = this.videoSearch.bind(this)
 
         this.handleScroll = this.handleScroll.bind(this)
         this.videoSearch = this.videoSearch.bind(this)
@@ -34,21 +38,37 @@ class App extends Component {
 
     componentDidMount() {
         window.addEventListener('scroll', this.handleScroll)
+        
     }
 
     componentWillUnmount() {
         window.removeEventListener('scroll', this.handleScroll)
+        
     }
 
-  videoSearch(term) {
-    YTSearch({key: apiKey, term: term}, (videos) => {
-      console.log(videos)
-      this.setState({
-        videos: videos,
-        selectedVideo: videos[0]
-       })
-    })
-  }
+    componentWillMount() {
+      this.videoSearch("vox")
+    }
+
+    videoSearch(searchTerm) {
+      axios.get(`http://localhost:3001/api/youtube/video?searchTerm=${searchTerm}`)
+          .then( response => {
+          console.log("res returned", response)
+            this.setState({
+              videos: response.data.items,
+              selectedVideo: response.data.items[0]
+            })
+          }).catch( err => console.log(err) )
+    }
+
+    selectVideo(videoId) {
+      axios.get(`http://localhost:3001/api/youtube/video?videoId=${videoId}`)
+      .then( response => {
+        console.log("All video info: ", response)
+      })
+    }
+
+
 
     handleScroll(e) {
         let top = e.srcElement.scrollingElement.scrollTop
@@ -57,22 +77,19 @@ class App extends Component {
     }
 
 
-
-
   render() {
-    console.log(this.state.selectedVideo)
     return (
       <div className="App" >
       <VideoPlayer minify={this.state.browsing} video={this.state.selectedVideo} />
-        <div className='card-grid'>
-          <div className='video-player-placeholder'></div>
-          <VideoInfo browse={this.state.browsing} />
-          <Comments />
-          <SuggestionBar />
-          <SideMenu />
-        </div>
+       
+        <Router>
+          <Switch>
+              <Route exact path="/" component={VideoPage} vidInfo={this.state.selectedVideo.snippet}/>
+              <Route path="*" component={VideoPage} vidInfo={this.state.selectedVideo.snippet} />
+          </Switch>
+        </Router>
 
-        <NavBar />
+        <NavBar videoSearch={this.videoSearch}  />
       </div>
     )
   }

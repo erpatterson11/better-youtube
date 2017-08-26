@@ -1,7 +1,4 @@
 .video-player-container {
     position: absolute;
-}
-
-.video-player {
-    border: none;
+    transform-origin: bottom right;
 }
