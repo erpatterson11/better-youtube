@@ -8,12 +8,9 @@ export default class VideoInfo extends Component {
    
 
     render() {
-
-        {console.log(this.props.vidInfo)}
-
         return (
             <div className="video-info card">
-                <p> </p>
+                <p>{}</p>
             </div>
         )
     }

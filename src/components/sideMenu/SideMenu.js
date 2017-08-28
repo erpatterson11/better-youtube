@@ -5,10 +5,7 @@ import './sideMenu.css'
 
 
 export default class SideMenu extends Component {
-    constructor(props) {
-        super(props) 
-    }
-    
+
 
     render() {
         return (

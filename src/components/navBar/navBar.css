@@ -35,8 +35,9 @@
     height: 30px;
 }
 
-.input-container {
-    max-width: 650px;
+.search-container {
+    align-items: flex-start;
+    align-self: flex-start;
 }
 
 .input-bar {

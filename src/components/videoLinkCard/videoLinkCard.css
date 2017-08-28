@@ -1,0 +1,7 @@
+.video-link-card {
+    cursor: pointer;
+}
+
+.video-link-card:hover {
+    background: #eeeeee;
+}

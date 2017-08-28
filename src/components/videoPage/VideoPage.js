@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import {HashRouter as Router, Route, Switch} from 'react-router-dom'
+import { connect } from 'react-redux'
 
-
-import YTSearch from 'youtube-api-search'
+import { setSelectedVideo } from '../../store/reducers/selectedVideoReducer'
 
 import VideoInfo from '../../components/videoInfo/VideoInfo'
 import Comments from '../../components/comments/Comments'
@@ -12,23 +11,23 @@ import SuggestionBar from '../../components/suggestionBar/SuggestionBar'
 
 import "./videoPage.css"
 
-const apiKey = `AIzaSyAGe9XCQwCwMou1ZmanPOHB-aWo9nZES20`
-
 
 class VideoPage extends Component {
-
   render() {
-    {console.log(this.props.vidInfo)}
     return (
         <div className='card-grid'>
           <div className='video-player-placeholder'></div>
-          <VideoInfo vidInfo={this.props.vidInfo} />
+          <VideoInfo vidInfo={this.props.videos.selectedVideo} />
           <Comments />
-          <SuggestionBar />
+          <SuggestionBar loading={this.props.videos.loading} setVideo={this.props.setSelectedVideo}/>
           <SideMenu />
         </div>
     )
   }
 }
 
-export default VideoPage
+function mapStateToProps(state) {
+  return {videos: state.selectedVideoReducer}
+}
+
+export default connect(mapStateToProps, {setSelectedVideo})(VideoPage)
