@@ -76,7 +76,11 @@ passport.authenticate('auth0', {
 }), (req,res) => res.redirect('http://localhost:3000'))
 
 app.get('/api/youtube/video', controller.getVideosBySearch)
+app.get('/api/youtube/suggested', controller.getSuggestedVideos)
 app.get('/api/youtube/comments', controller.getVideoComments)
+app.get('/api/youtube/channel', controller.getChannelInfo)
+
+app.get('/api/youtube/videoPageDetails', controller.getVideoPageDetails)
 
 
 

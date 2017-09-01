@@ -26,7 +26,6 @@ class SearchResults extends Component {
     render() {
 
 // onBlur={ this.props.closeResultsComponent }
-
         let displayResults = () => {
 
             let handleVideoSelection = (video) => {
@@ -40,6 +39,9 @@ class SearchResults extends Component {
         return (
             <div className="search-results-container card" hidden={!this.props.resultsDisplayed}  tabIndex="-1">
                 {Object.keys(this.props.results).length ? displayResults() : ""}
+                <div>
+                    <p onClick={ () => this.props.getMore() }>See more</p>
+                </div>
             </div>
         )
 

@@ -2,17 +2,15 @@ import React, { Component } from 'react'
 
 import Divider from 'material-ui/Divider'
 
-import './videoInfo.css'
+import './videoDesc.css'
 
 
 
-export default class VideoInfo extends Component {
-   
-  
+export default class VideoDesc extends Component {
 
     render() {
         return (
-            <div className="video-info card">
+            <div className="video-desc card">
                 <p>{}</p>
                 <Divider />
             </div>

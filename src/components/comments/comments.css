@@ -1,3 +1,23 @@
 .comments {
     grid-area: comments;
 }
+
+.comments-toolbar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 24px;
+    margin: 10px 0px;
+}
+
+.comments-sort-by {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: rgba(17,17,17,0.6);
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 40px;
+    width: 90px;
+
+}

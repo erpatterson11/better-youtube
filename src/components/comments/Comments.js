@@ -1,15 +1,43 @@
+// React
 import React, { Component } from 'react'
+import moment from 'moment'
 
+// Custom components
+import Comment from '../comment/Comment'
+import CommentEntry from '../commentEntry/CommentEntry'
+
+// Material Icons
+import IconMenu from 'material-ui/IconMenu'
+import IconButton from 'material-ui/IconButton'
+import MenuItem from 'material-ui/MenuItem'
+import Sort from 'material-ui/svg-icons/content/sort'
+
+// CSS
 import './comments.css'
 
 
-
+// Component
 export default class Comments extends Component {
 
-    
     render() {
+
+        let displayComments = () => this.props.comments.map( (comment,i) => <Comment 
+                                                                                comment={comment.snippet.topLevelComment.snippet} 
+                                                                                publishedAgo={moment( moment(comment.publishedAt) ).fromNow()} 
+                                                                                key={comment.id} 
+                                                                            />)        
+
         return (
             <div className="comments card">
+                <div className="comments-toolbar"> 
+                    <p className="comments-total">{ this.props.totalComments || 0 } Comments</p>
+                    <IconMenu iconButtonElement={<IconButton><Sort color="rgba(17,17,17,0.4)" /></IconButton>} >
+                        <MenuItem primaryText="Top comments" />
+                        <MenuItem primaryText="Newest first" />
+                    </IconMenu>
+                </div>
+                <CommentEntry />
+                { Object.keys(this.props.comments).length > 0 ? displayComments() : "" }
             </div>
         )
     }

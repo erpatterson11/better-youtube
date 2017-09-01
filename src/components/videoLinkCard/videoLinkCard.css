@@ -1,7 +1,31 @@
 .video-link-card {
     cursor: pointer;
+    display: flex;
+    margin-bottom: 8px;
 }
 
 .video-link-card:hover {
     background: #eeeeee;
+}
+
+.video-link-text {
+    flex: 1;
+}
+
+.video-link-pic {
+    width: 164px;
+    height: 94px;
+    margin-right: 10px;
+    background-size: cover;
+}
+ 
+.video-link-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgb(17,17,17)
+}
+
+.video-link-channel {
+    font-size: 13px;
+    color: rgba(17,17,17, 0.6)
 }

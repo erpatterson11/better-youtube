@@ -1,10 +1,19 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import * as DockActions from '../../store/reducers/dockReducer'
+import { getVideoSuggestions } from '../../store/reducers/selectedVideoReducer'
 
 import SearchResults from '../searchResults/SearchResults'
 
+import RaisedButton from 'material-ui/RaisedButton'
+import TextField from 'material-ui/TextField'
+import Paper from 'material-ui/Paper'
+import SearchIcon from 'material-ui/svg-icons/action/search'
+          
+
 import "./navBar.css"
 
-export default class NavBar extends Component {
+class NavBar extends Component {
 
     constructor(props) {
         super(props)
@@ -26,42 +35,48 @@ export default class NavBar extends Component {
 
     handleSubmit() {
         this.props.videoSearch(this.state.term)
-        this.setState({term: "", resultsDisplayed: true})
+        this.setState({resultsDisplayed: true})
     }
 
     closeResultsComponent() {
-        console.log('blue event fired')
-        this.setState({resultsDisplayed: false})
+        this.setState({resultsDisplayed: false, term: ""})
     }
 
     render() {
 
+        let style = {
+            height: "36px"
+        }
+
+
         return (
-                <div className='nav-bar card flex-cont'>
+                <Paper className='nav-bar card flex-cont' zDepth={1}>
 
                     <div className='logo-container flex-cont'>
-                        <div className="ham-menu btn"> </div>
+                        <div className="ham-menu btn" onClick={this.props.toggleDock}> </div>
                         <div className='logo btn'></div>
                     </div>
 
                     <div className="search-container flex-cont">
-                        <div className="input-container">
-                            <input className="input-bar" type="text" placeholder="Search" value={this.state.term} onChange={ e => this.handleTyping(e) }/>
-                            <SearchResults results={this.props.searchResults} resultsDisplayed={this.state.resultsDisplayed}  closeResultsComponent={this.closeResultsComponent} setVideo={this.props.setVideo}/>
-                        </div>
-                        <button className="search-button flex-cont btn" onClick={ () => this.handleSubmit() }>
-                            <span className="search-glass">Search</span>
-                        </button>
+                        <Paper className="input-container" zDepth={1}>
+                            <TextField id="search-input" className="input-bar" fullWidth={true} placeholder="Search" type="text" value={this.state.term} style={style} inputStyle={{paddingLeft: "15px"}} underlineShow={false} onChange={ e => this.handleTyping(e) } />
+                            <SearchResults results={this.props.searchResults} nextPage={this.props.nextSearchToken} resultsDisplayed={this.state.resultsDisplayed}  closeResultsComponent={this.closeResultsComponent} setVideo={this.props.setVideo} getMore={this.props.getVideoSuggestions} />
+                        </Paper>
+                        <RaisedButton icon={<SearchIcon />} style={{borderTopLeftRaduis: "0px", borderBottomLeftRaduis: "0px"}} onClick={ () => this.handleSubmit() } />
                     </div>
 
                     <div className="action-container flex-cont">
-                        <button className="sign-in-button btn" onClick={() => window.location.href="http://localhost:3001/login"}>
-                            <span className="sign-in-content">Sign In</span>
-                        </button>
+                        <RaisedButton backgroundColor="#167ac6" label="Sign In" labelColor="#ffffff" onClick={() => window.location.href="http://localhost:3001/login"} />
                     </div>
 
-                </div>
+                </Paper>
         )
     }
 
 }
+
+function mapStateToProps(state) {
+    return state
+}
+
+export default connect(mapStateToProps, {...DockActions, getVideoSuggestions})(NavBar)

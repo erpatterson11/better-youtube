@@ -1,4 +1,44 @@
 .video-player-container {
-    position: absolute;
     transform-origin: bottom right;
+    grid-area: video;
+}
+
+.video-player {
+    width: 856px;
+    height: 480px;
+    border: none;
+    box-shadow: 0 1px 2px rgba(0,0,0,.1);
+}
+
+.video-player-placeholder {
+  grid-area: video;
+}
+
+
+/* ///////////////////////////////////////////
+          Media Queries
+////////////////////////////////////////////*/
+
+
+@media (max-width: 1200px) {
+  .video-player {
+    width: 640px;
+    height: 360px;
+  }
+}
+
+@media (max-width: 1000px) {
+
+  .video-player {
+    width: 856px;
+    height: 480px;
+  }
+}
+
+@media (max-width: 1000px) {
+
+  .video-player {
+    width: 856px;
+    height: 480px;
+  }
 }

@@ -1,3 +1,15 @@
 .suggestion-bar {
     grid-area: suggestions;
 }
+
+.suggestion-show-more-btn {
+    border: none;
+    border-radius: 3px;
+    width: 100%;
+    height: 36px;
+    background-color: rgb(238,238,238);
+    color: rgba(136,136,136,0.8);
+    font-weight: bold;
+    font-size: 13px;
+    cursor: pointer;
+}
