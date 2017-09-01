@@ -22,9 +22,8 @@ const VideoPlayer = ({video, minify}) => {
     }
 
     return (
-        
         <div className="video-player-container card" style={minify ? browseStyle : null} >
-            <iframe className={`video-player`}  src={`https://www.youtube.com/embed/${id}`} />
+            <iframe className={`video-player`}  src={`https://www.youtube.com/embed/${id}?start=300`} frameborder="0" allowfullscreen />
         </div>
     )
 }

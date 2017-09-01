@@ -17,7 +17,11 @@ const funcs = {
         let searchTerm = req.query.searchTerm
         let url = `${ytApi}/search?part=snippet&maxResults=20&type=video&q=${searchTerm}&key=${apiKey}`
         axios.get(url)
-            .then( videos => res.status(200).send(videos.data) )
+            .then( videos => {
+                console.log(videos)
+                res.status(200).send(videos.data) 
+            })
+            .catch( err => res.status(500).send(err))
     },
 
     getVideoComments: function(req,res,next) {
