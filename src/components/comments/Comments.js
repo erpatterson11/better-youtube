@@ -2,6 +2,10 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 
+// Services
+
+import Util from '../../services/funcsService'
+
 // Custom components
 import Comment from '../comment/Comment'
 import CommentEntry from '../commentEntry/CommentEntry'
@@ -11,6 +15,7 @@ import IconMenu from 'material-ui/IconMenu'
 import IconButton from 'material-ui/IconButton'
 import MenuItem from 'material-ui/MenuItem'
 import Sort from 'material-ui/svg-icons/content/sort'
+import CircularProgress from 'material-ui/CircularProgress'
 
 // CSS
 import './comments.css'
@@ -21,16 +26,16 @@ export default class Comments extends Component {
 
     render() {
 
-        let displayComments = () => this.props.comments.map( (comment,i) => <Comment 
-                                                                                comment={comment.snippet.topLevelComment.snippet} 
-                                                                                publishedAgo={moment( moment(comment.publishedAt) ).fromNow()} 
-                                                                                key={comment.id} 
-                                                                            />)        
+        let displayComments = () => this.props.comments.map( (comment,i) => <Comment comment={comment.snippet.topLevelComment.snippet} publishedAgo={moment( moment(comment.publishedAt) ).fromNow()} key={comment.id} />)        
+
+        console.log( "comments loading", this.props.loading)
+
+        if (this.props.loading || this.props.comments.length === 0) return <div className="progress-container"><CircularProgress /></div>
 
         return (
             <div className="comments card">
                 <div className="comments-toolbar"> 
-                    <p className="comments-total">{ this.props.totalComments || 0 } Comments</p>
+                    <p className="comments-total">{ Util.formatCounterText(this.props.video.statistics.commentCount) } Comments</p>
                     <IconMenu iconButtonElement={<IconButton><Sort color="rgba(17,17,17,0.4)" /></IconButton>} >
                         <MenuItem primaryText="Top comments" />
                         <MenuItem primaryText="Newest first" />

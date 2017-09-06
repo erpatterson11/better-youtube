@@ -9,6 +9,8 @@ export default function VideoLinkCard({video, setVideo}) {
 
     let image = video.snippet.thumbnails.medium
 
+    console.log("link card vid", video)
+
     return (
         <div className="video-link-card" onClick={ () => setVideo(video) } > 
             <Paper zDepth={1} className="video-link-pic" style={{backgroundImage: `url(${image.url})`, width: "164px", height: "94px"}}>

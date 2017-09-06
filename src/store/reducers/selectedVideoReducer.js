@@ -10,7 +10,8 @@ const initialState = {
     nextSuggestedToken: "",
     searchResults: {},
     nextSearchToken: "",
-    loading: false
+    videoLoading: false,
+    commentsLoading: false
 }
 
 // Constants
@@ -19,6 +20,10 @@ const SET_SELECTED_VIDEO = 'SET_SELECTED_VIDEO'
 const GET_VIDEOS_SEARCH = 'GET_VIDEOS_SEARCH'
 const GET_VIDEOS_SEARCH_PENDING = 'GET_VIDEOS_SEARCH_PENDING'
 const GET_VIDEOS_SEARCH_FULFILLED = 'GET_VIDEOS_SEARCH_FULFILLED'
+
+const GET_VIDEO_STATS = 'GET_VIDEO_STATS'
+const GET_VIDEO_STATS_PENDING = 'GET_VIDEO_STATS_PENDING'
+const GET_VIDEO_STATS_FULFILLED = 'GET_VIDEO_STATS_FULFILLED'
 
 const GET_VIDEO_COMMENTS = "GET_VIDEO_COMMENTS"
 const GET_VIDEO_COMMENTS_PENDING = "GET_VIDEO_COMMENTS_PENDING"
@@ -47,15 +52,20 @@ export default function selectedVideoReducer( state=initialState, action ) {
         case GET_VIDEOS_SEARCH_FULFILLED:
             return Object.assign({}, state, {loading: false, searchResults: action.payload.items, nextSearchToken: action.payload.nextPageToken})
 
-        case GET_VIDEO_COMMENTS_PENDING:
+        case GET_VIDEO_STATS_PENDING:
             return Object.assign({}, state)
+        case GET_VIDEO_STATS_FULFILLED:
+            return Object.assign({}, state, {selectedVideo: action.payload.data.items[0]})
+
+        case GET_VIDEO_COMMENTS_PENDING:
+            return Object.assign({}, state, {commentsLoading: true})
         case GET_VIDEO_COMMENTS_FULFILLED:
-            return Object.assign({}, state, {selectedVideoComments: [...action.payload.items]})
+            return Object.assign({}, state, {selectedVideoComments: [...action.payload.items], commentsLoading: false})
 
         case GET_MORE_COMMENTS_PENDING:
-            return Object.assign({}, state)
+            return Object.assign({}, state, {commentsLoading: true})
         case GET_MORE_COMMENTS_FULFILLED:
-            return Object.assign({}, state, {selectedVideoComments: [...state.selectedVideoComments, ...action.payload.items]})
+            return Object.assign({}, state, {selectedVideoComments: [...state.selectedVideoComments, ...action.payload.items], commentsLoading: false})
 
         case GET_SUGGESTED_VIDEOS_PENDING:
             return Object.assign({}, state)
@@ -101,5 +111,12 @@ export function getVideoSuggestions(videoId) {
     return {
         type: GET_SUGGESTED_VIDEOS,
         payload: searchService.getVideoSuggestions(videoId)
+    }
+}
+
+export function getVideoStats(videoId) {
+    return {
+        type: GET_VIDEO_STATS,
+        payload: searchService.getVideoStats(videoId)
     }
 }

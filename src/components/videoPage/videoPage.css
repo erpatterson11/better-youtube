@@ -6,12 +6,12 @@
 
 .card-grid {
   display: grid;
-  grid-template-rows: 480px 150px 122px auto;
+  grid-template-rows: 480px 70px max-content max-content;
   grid-template-columns: 854px 416px;
   grid-template-areas: "video suggestions"
                       "video-info suggestions"
                       "video-description suggestions"
-                      "comments browse";
+                      "comments suggestions";
   grid-gap: 20px;
 
   margin-top: 70px;
@@ -26,7 +26,7 @@
 
 @media (max-width: 1200px) {
   .card-grid {
-    grid-template-rows: 360px 150px 122px 2623px;
+    grid-template-rows: 360px 70px max-content max-content;
     grid-template-columns: 640px auto;
   }
 
@@ -41,7 +41,7 @@
 
 @media (max-width: 1000px) {
   .card-grid {
-    grid-template-rows: 480px 150px 122px auto auto;
+    grid-template-rows: 480px 70px max-content max-content max-content;
     grid-template-columns: 854px;
     grid-template-areas: "video"
                         "video-info"
@@ -58,7 +58,7 @@
 
 @media (max-width: 854px) {
   .card-grid {
-    grid-template-rows: 360px 93px 185px auto auto;
+    grid-template-rows: 360px 70px max-content max-content max-content;
     grid-template-columns: 640px;
     grid-template-areas: "video"
                         "video-info"

@@ -13,3 +13,20 @@
     font-size: 13px;
     cursor: pointer;
 }
+
+.suggestion-next-video {
+    margin-bottom: 15px;
+}
+
+.suggestion-next-video-banner {
+    display: flex;
+    justify-content: space-around;
+}
+
+.suggestion-next-text {
+    flex: 1;
+}
+
+.suggestion-next-video-card {
+    margin-bottom: 7px;
+}

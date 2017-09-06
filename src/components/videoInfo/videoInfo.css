@@ -2,3 +2,39 @@
     grid-area: video-info;
 }
 
+.video-arist-title {
+    width: 100%;
+    color: rgb(17,17,17);
+    font-size: 18px;
+}
+
+.video-stats-actions {
+    display: flex;
+    align-items: center;
+    color: rgba(17,17,17,0.4);
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.video-view-count {
+    flex: 1;
+    font-size: 16px;
+    color: rgba(17,17,17,0.6)
+}
+
+.video-actions {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.video-icon-text {
+    width: 60px;
+    margin-left: 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}

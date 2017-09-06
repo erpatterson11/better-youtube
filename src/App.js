@@ -4,7 +4,7 @@ import {HashRouter as Router, Route, Switch} from 'react-router-dom'
 import { connect } from 'react-redux'
 
 // redux actions
-import * as reducerActions from './store/reducers/selectedVideoReducer'
+import * as videoReducerActions from './store/reducers/selectedVideoReducer'
 import { setBrowse } from './store/reducers/browseReducer'
 
 // components
@@ -42,14 +42,19 @@ class App extends Component {
 
     handleScroll(e) {
         let top = e.srcElement.scrollingElement.scrollTop
-        if (top > 300 && this.props.browse.browsing === false) this.props.setBrowse(true)
-        else if (top < 300 && this.props.browse.browsing) this.props.setBrowse(false)
+        let totalHeight = document.documentElement.scrollHeight
+        let clientHeight = document.documentElement.clientHeight
+
+        if (top > 15 && this.props.browse.browsing === false) this.props.setBrowse(true)
+        else if (top < 15 && this.props.browse.browsing) this.props.setBrowse(false)
+
+        if (this.props.videos.selectedVideo.hasOwnProperty('id') && totalHeight == top + clientHeight) this.props.getVideoComments(this.props.videos.selectedVideo.id)
     }
 
     handleSetVideo = (video) => {
-      console.log(video);
-      this.props.setSelectedVideo(video)
-      this.props.getVideoComments(video.id.videoId)
+      this.props.getVideoStats(video.id.videoId)
+      this.props.setBrowse(false)
+      // this.props.getVideoComments(video.id.videoId)
       this.props.getVideoSuggestions( video.id.videoId )
     }
 
@@ -79,4 +84,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {...reducerActions, setBrowse})(App)
+export default connect(mapStateToProps, {...videoReducerActions, setBrowse})(App)

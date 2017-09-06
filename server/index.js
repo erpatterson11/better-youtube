@@ -79,6 +79,7 @@ app.get('/api/youtube/video', controller.getVideosBySearch)
 app.get('/api/youtube/suggested', controller.getSuggestedVideos)
 app.get('/api/youtube/comments', controller.getVideoComments)
 app.get('/api/youtube/channel', controller.getChannelInfo)
+app.get('/api/youtube/video/:id', controller.getVideoStatsById)
 
 app.get('/api/youtube/videoPageDetails', controller.getVideoPageDetails)
 

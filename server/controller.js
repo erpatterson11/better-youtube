@@ -43,6 +43,15 @@ const funcs = {
         let url = `${ytApi}/channels?part=snippet,statistics&id=${id}&key=${apiKey}`
         axios.get(url)
             .then( channel => res.status(200).send(channel.data) )
+    },
+
+    getVideoStatsById: function(req,res,next) {
+        let id = req.params.id 
+        console.log(id)
+        let url = `${ytApi}/videos?part=snippet,statistics&id=${id}&key=${apiKey}`
+        axios.get(url)
+            .then( videoInfo => res.status(200).send(videoInfo.data) )
+            .catch( err => {res.status(500).send(err)} )
     }
 
 }

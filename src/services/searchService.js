@@ -40,3 +40,7 @@ export function getVideoPageInfo(videoId) {
     return axios.get( `http://localhost:3001/api/youtube/suggested?videoId=${videoId}` )
         .then( res => res.data)
 }
+
+export function getVideoStats(videoId) {
+    return axios.get( `http://localhost:3001/api/youtube/video/${videoId}` )
+}

@@ -1,6 +1,7 @@
 .video-player-container {
-    transform-origin: bottom right;
-    grid-area: video;
+    transform-origin: top right;
+    /*grid-area: video;*/
+    transition: 0.3s;
 }
 
 .video-player {

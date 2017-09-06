@@ -1,3 +1,25 @@
 .video-desc {
     grid-area: video-description;
 }
+
+.video-desc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 51px;
+    margin-bottom: 12px;
+}
+
+.video-desc-avatar {
+    width: 51px;
+}
+
+.video-desc-channel {
+    flex: 1;
+}
+
+.video-desc-desc {
+    padding-left: 51px;
+    margin-bottom: 15px;
+    white-space: pre-wrap;
+}

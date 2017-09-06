@@ -14,27 +14,33 @@ import "./videoPage.css"
 
 
 class VideoPage extends Component {
+
   render() {
 
-    let handleSetVideo = (video) => {
-      this.props.setSelectedVideo(video)
-      this.props.getVideoComments(video.id.videoId)
+    const { selectedVideo, selectedVideoComments, commentsLoading, suggestedVideos } = this.props.videos
+    const { browsing } = this.props.browse
+
+    const handleSetVideo = (video) => {
+      this.props.getVideoStats(video.id.videoId)
       this.props.getVideoSuggestions( video.id.videoId )
     }
 
+    console.log( "video page: ", selectedVideo)
+
     return (
+
       <div className="video-page-container">
         <SideMenu />
         <div className='card-grid'>
         {
           // <div className='video-player-placeholder'></div>
         }
-          <VideoPlayer minify={this.props.browse.browsing} video={this.props.videos.selectedVideo} />
+          <VideoPlayer minify={this.props.browse.browsing} video={selectedVideo} />
 
-          <VideoInfo vidInfo={this.props.videos.selectedVideo} />
-          <VideoDesc />
-          <Comments comments={this.props.videos.selectedVideoComments} />
-          <SuggestionBar setVideo={handleSetVideo} suggested={this.props.videos.suggestedVideos} />
+          <VideoInfo vidInfo={selectedVideo} />
+          <VideoDesc vidInfo={selectedVideo} />
+          <Comments video={selectedVideo} comments={selectedVideoComments} loading={commentsLoading} />
+          <SuggestionBar setVideo={handleSetVideo} suggested={suggestedVideos} />
         </div>
       </div>
     )
