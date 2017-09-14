@@ -9,10 +9,11 @@ const VideoPlayer = ({video, minify}) => {
     const browseStyle = {
         position: "fixed",
         right: 15,
-        top: 70,
+        bottom: 15,
         transform: "scale(0.5)",
         boxShadow: "rgba(0, 0, 0, 0.2) -3px -3px 10px 0px",
-        gridArea: "none"
+        gridArea: "none",
+        zIndex: 100000
     }
 
     let id

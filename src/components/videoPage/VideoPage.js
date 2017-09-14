@@ -16,7 +16,6 @@ class VideoPage extends Component {
 
     componentDidMount() {
       const vidPlaceholder = this.refs.vidPlaceholder.getBoundingClientRect()
-      
     }
   
 

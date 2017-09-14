@@ -23,6 +23,13 @@
           Media Queries
 ////////////////////////////////////////////*/
 
+@media (min-width: 1750px) {
+  .card-grid {
+    grid-template-rows: 720px 70px max-content max-content;
+    grid-template-columns: 1280px 416px;    
+  }
+}
+
 
 @media (max-width: 1200px) {
   .card-grid {
