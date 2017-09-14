@@ -1,0 +1,20 @@
+.percentage-bar-component {
+    display: flex;
+}
+
+.percentage-bar-placeholder {
+    flex-basis: 50%;
+}
+
+.percentage-bar-container {
+    /*flex: 1;*/
+    width: 135px;
+    height: 2px;
+    background: rgba(136, 136, 136, 0.4);
+}
+
+.percentage-bar-fill {
+    position: absolute;
+    background-color: rgb(38, 147, 230);
+    height: 2px;
+}

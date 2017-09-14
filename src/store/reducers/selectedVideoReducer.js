@@ -5,6 +5,7 @@ import * as searchService from '../../services/searchService'
 const initialState = {
     selectedVideo: {},
     selectedVideoComments: [],
+    videoChannelProfile: {},
     nextCommentsToken: "", 
     suggestedVideos: [],
     nextSuggestedToken: "",
@@ -37,6 +38,10 @@ const GET_SUGGESTED_VIDEOS = "GET_SUGGESTED_VIDEOS"
 const GET_SUGGESTED_VIDEOS_PENDING = "GET_SUGGESTED_VIDEOS_PENDING"
 const GET_SUGGESTED_VIDEOS_FULFILLED = "GET_SUGGESTED_VIDEOS_FULFILLED"
 
+const GET_CHANNEL_STATS = 'GET_CHANNEL_STATS'
+const GET_CHANNEL_STATS_PENDING = 'GET_CHANNEL_STATS_PENDING'
+const GET_CHANNEL_STATS_FULFILLED = 'GET_CHANNEL_STATS_FULFILLED'
+
 
 // Reducer
 export default function selectedVideoReducer( state=initialState, action ) {
@@ -44,7 +49,6 @@ export default function selectedVideoReducer( state=initialState, action ) {
     switch(action.type) {
 
         case SET_SELECTED_VIDEO: 
-            console.log('video info', action.payload)
             return Object.assign({}, {...initialState, selectedVideo: action.payload} )
 
         case GET_VIDEOS_SEARCH_PENDING:
@@ -55,7 +59,7 @@ export default function selectedVideoReducer( state=initialState, action ) {
         case GET_VIDEO_STATS_PENDING:
             return Object.assign({}, state)
         case GET_VIDEO_STATS_FULFILLED:
-            return Object.assign({}, state, {selectedVideo: action.payload.data.items[0]})
+            return Object.assign({}, initialState, {selectedVideo: action.payload.data.items[0]})
 
         case GET_VIDEO_COMMENTS_PENDING:
             return Object.assign({}, state, {commentsLoading: true})
@@ -72,6 +76,10 @@ export default function selectedVideoReducer( state=initialState, action ) {
         case GET_SUGGESTED_VIDEOS_FULFILLED:
             return Object.assign({}, state, {suggestedVideos: [...state.suggestedVideos, ...action.payload.items]})
 
+        case GET_CHANNEL_STATS_PENDING:
+            return Object.assign({}, state)
+        case GET_CHANNEL_STATS_FULFILLED:
+            return Object.assign({}, state, {videoChannelProfile: action.payload.data.items[0]})
 
     default: return state
     }
@@ -118,5 +126,12 @@ export function getVideoStats(videoId) {
     return {
         type: GET_VIDEO_STATS,
         payload: searchService.getVideoStats(videoId)
+    }
+}
+
+export function getChannelStats(channelId) {
+    return {
+        type: GET_CHANNEL_STATS,
+        payload: searchService.getChannelStats(channelId)
     }
 }

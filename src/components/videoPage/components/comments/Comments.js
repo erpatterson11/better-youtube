@@ -4,7 +4,7 @@ import moment from 'moment'
 
 // Services
 
-import Util from '../../services/funcsService'
+import Util from '../../../../services/funcsService'
 
 // Custom components
 import Comment from '../comment/Comment'
@@ -27,8 +27,6 @@ export default class Comments extends Component {
     render() {
 
         let displayComments = () => this.props.comments.map( (comment,i) => <Comment comment={comment.snippet.topLevelComment.snippet} publishedAgo={moment( moment(comment.publishedAt) ).fromNow()} key={comment.id} />)        
-
-        console.log( "comments loading", this.props.loading)
 
         if (this.props.loading || this.props.comments.length === 0) return <div className="progress-container"><CircularProgress /></div>
 

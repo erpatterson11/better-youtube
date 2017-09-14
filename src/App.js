@@ -10,6 +10,7 @@ import { setBrowse } from './store/reducers/browseReducer'
 // components
 import VideoPlayer from './components/videoPlayer/VideoPlayer'
 import VideoPage from './components/videoPage/VideoPage'
+import SideMenu from './components/sideMenu/SideMenu'
 import NavBar from './components/navBar/NavBar'
 
 // css
@@ -54,6 +55,7 @@ class App extends Component {
     handleSetVideo = (video) => {
       this.props.getVideoStats(video.id.videoId)
       this.props.setBrowse(false)
+      this.props.getChannelStats(video.snippet.channelId)
       // this.props.getVideoComments(video.id.videoId)
       this.props.getVideoSuggestions( video.id.videoId )
     }
@@ -63,9 +65,11 @@ class App extends Component {
     return (
       <div className="App" >
       
+      <SideMenu />
+
         <Router>
           <Switch>
-              <Route exact path="/" component={VideoPage} />
+              <Route exact path="/watch/:videoId" component={VideoPage} />
               <Route path="*" component={VideoPage} />
           </Switch>
         </Router>

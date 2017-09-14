@@ -39,7 +39,7 @@ const funcs = {
     },
 
     getChannelInfo: function(req,res,next) {
-        let id = req.query.id
+        let id = req.params.id
         let url = `${ytApi}/channels?part=snippet,statistics&id=${id}&key=${apiKey}`
         axios.get(url)
             .then( channel => res.status(200).send(channel.data) )
@@ -52,8 +52,19 @@ const funcs = {
         axios.get(url)
             .then( videoInfo => res.status(200).send(videoInfo.data) )
             .catch( err => {res.status(500).send(err)} )
-    }
+    },
 
+    getChannels: function(req,res,next) {
+        console.log("accessToken", req.session.tokens)
+        let accessToken = req.session.tokens.access_token
+        let url = `${ytApi}/channels?access_token=${accessToken}&part=snippet&mine=true&key=${apiKey}`
+        axios.get(url)
+            .then( response => {
+                // console.log("response", response.data)
+                res.status(200).send(response.data)
+            })
+            .catch( err => console.log("error", err) )
+    }
 }
 
 funcs.getVideoPageDetails = function(req,res,next) {
@@ -64,7 +75,6 @@ funcs.getVideoPageDetails = function(req,res,next) {
 
         Promise.all(appliedFuncs).then( res => console.log(res) )
 
-    
 }.bind(funcs)
 
 module.exports = funcs

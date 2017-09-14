@@ -21,19 +21,25 @@
 .video-view-count {
     flex: 1;
     font-size: 16px;
-    color: rgba(17,17,17,0.6)
+    color: rgba(17,17,17,0.6);
+    font-weight: normal;
+    text-transform: lowercase;
 }
 
 .video-actions {
     flex: 1;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
 }
 
+.video-actions-thumbs {
+    display: flex;
+    justify-content: space-around;
+}
+
 .video-icon-text {
-    width: 60px;
-    margin-left: 15px;
+    width: 65px;
     display: flex;
     justify-content: space-around;
     align-items: center;

@@ -5,11 +5,18 @@ import { getVideoSuggestions } from '../../store/reducers/selectedVideoReducer'
 
 import SearchResults from '../searchResults/SearchResults'
 
+import IconButton from 'material-ui/IconButton';
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
+
+
+import YtLogo from '../../images/youtube-logo'
+import YtRedLogo from '../../images/youtube-red-logo'
+
 import SearchIcon from 'material-ui/svg-icons/action/search'
-          
+import Menu from 'material-ui/svg-icons/navigation/menu'
+
 
 import "./navBar.css"
 
@@ -50,28 +57,30 @@ class NavBar extends Component {
 
 
         return (
-                <Paper className='nav-bar card flex-cont' zDepth={1}>
+            <Paper className='nav-bar card flex-cont' zDepth={1}>
 
-                    <div className='logo-container flex-cont'>
-                        <div className="ham-menu btn" onClick={this.props.toggleDock}> </div>
-                        <div className='logo btn'></div>
-                    </div>
+                <div className='logo-container flex-cont'>
+                    <IconButton icon  onClick={this.props.toggleDock} >
+                        <Menu  color="rgba(17,17,17,0.4" />
+                    </IconButton>
+                    <YtLogo height="24px" />
+                </div>
 
-                    <div className="search-container flex-cont">
-                        <Paper className="input-container" zDepth={1}>
-                            <form onSubmit={this.handleSubmit}>
-                                <TextField id="search-input" className="input-bar" fullWidth={true} placeholder="Search" type="text" value={this.state.term} style={style} inputStyle={{paddingLeft: "15px"}} underlineShow={false} onChange={ e => this.handleTyping(e) } />
-                            </form>
-                            <SearchResults results={this.props.searchResults} nextPage={this.props.nextSearchToken} resultsDisplayed={this.state.resultsDisplayed}  closeResultsComponent={this.closeResultsComponent} setVideo={this.props.setVideo} getMore={this.props.getVideoSuggestions} />
-                        </Paper>
-                        <RaisedButton icon={<SearchIcon />} style={{borderTopLeftRaduis: "0px", borderBottomLeftRaduis: "0px"}} onClick={this.handleSubmit} />
-                    </div>
+                <div className="search-container flex-cont">
+                    <Paper className="input-container" zDepth={1}>
+                        <form onSubmit={this.handleSubmit}>
+                            <TextField id="search-input" className="input-bar" fullWidth={true} placeholder="Search" type="text" value={this.state.term} style={style} inputStyle={{paddingLeft: "15px"}} underlineShow={false} onChange={ e => this.handleTyping(e) } />
+                        </form>
+                        <SearchResults results={this.props.searchResults} nextPage={this.props.nextSearchToken} resultsDisplayed={this.state.resultsDisplayed}  closeResultsComponent={this.closeResultsComponent} setVideo={this.props.setVideo} getMore={this.props.getVideoSuggestions} />
+                    </Paper>
+                    <RaisedButton icon={<SearchIcon />} style={{borderTopLeftRaduis: "0px", borderBottomLeftRaduis: "0px"}} onClick={this.handleSubmit} />
+                </div>
 
-                    <div className="action-container flex-cont">
-                        <RaisedButton backgroundColor="#167ac6" label="Sign In" labelColor="#ffffff" onClick={() => window.location.href="http://localhost:3001/login"} />
-                    </div>
+                <div className="action-container flex-cont">
+                    <RaisedButton backgroundColor="#167ac6" label="Sign In" labelColor="#ffffff" onClick={() => window.location.href="http://localhost:3001/login"} />
+                </div>
 
-                </Paper>
+            </Paper>
         )
     }
 

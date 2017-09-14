@@ -44,3 +44,7 @@ export function getVideoPageInfo(videoId) {
 export function getVideoStats(videoId) {
     return axios.get( `http://localhost:3001/api/youtube/video/${videoId}` )
 }
+
+export function getChannelStats(channelId) {
+    return axios.get( `http://localhost:3001/api/youtube/channel/${channelId}` )
+}

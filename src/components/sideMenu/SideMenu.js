@@ -31,10 +31,7 @@ import Download from 'material-ui/svg-icons/file/file-download'
 
 import './sideMenu.css'
 
-
-
 class SideMenu extends Component {
-
 
     render() {
         return (
@@ -67,7 +64,6 @@ class SideMenu extends Component {
                     <Divider />
                 </Menu>
             </Drawer>
-
         )
     }
 }

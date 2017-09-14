@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 
-import Util from '../../services/funcsService'
+import PercentageBar from '../percentageBar/PercentageBar'
+
+import Util from '../../../../services/funcsService'
 
 import Divider from 'material-ui/Divider'
 import FlatButton from 'material-ui/FlatButton'
-
+import Slider from 'material-ui/Slider'
 import Popover from 'material-ui/Popover'
 import IconMenu from 'material-ui/IconMenu'
 import IconButton from 'material-ui/IconButton'
@@ -19,6 +21,7 @@ import MoreHoriz from 'material-ui/svg-icons/navigation/more-horiz'
 
 import './videoInfo.css'
 
+                            // <Slider min={0} max={ likes + dislikes } step={1} defaultValue={ likes } disableFocusRipple sliderStyle={{color: "white"}}/>
 
 
 export default class VideoInfo extends Component {
@@ -54,24 +57,31 @@ export default class VideoInfo extends Component {
 
         const iconFill = "rgba(17,17,17,0.4)"
         const iconSize = 20
+        const likesTotalWidth = 135
 
         if (Util.checkEmptyObj(video)) return <div></div>
+
+        const likes = +video.statistics.likeCount
+        const dislikes = +video.statistics.dislikeCount
+
 
         return (
             <div className="video-info card">
                 <div className="video-artist-title"> { video.hasOwnProperty("id") ? video.snippet.title : ""}</div>
                 <div className="video-stats-actions">
                     <p className="video-view-count">
-                    {  Util.formatCounterText(video.statistics.viewCount) } views
+                    {  Util.formatCounterText(video.statistics.viewCount, true) } views
                     </p>
-                    <div className="video-actions">
-                        <div className="video-icon-text" >
-                            <ThumbUp color={iconFill} style={{height: iconSize}} />
-                            <p>{ Util.formatCounterText(video.statistics.likeCount) }</p>
-                        </div>
-                        <div className="video-icon-text" >
-                            <ThumbUp color={iconFill} style={{height: iconSize}} />
-                            <p>{ Util.formatCounterText(video.statistics.dislikeCount) }</p>
+                    <div className="video-actions"  >
+                        <div className="video-actions-thumbs" style={{width: likesTotalWidth}} >
+                            <div className="video-icon-text" >
+                                <ThumbUp color={iconFill} style={{height: iconSize}} />
+                                <p>{ Util.formatCounterText(video.statistics.likeCount) }</p>
+                            </div>
+                            <div className="video-icon-text" >
+                                <ThumbUp color={iconFill} style={{height: iconSize}} />
+                                <p>{ Util.formatCounterText(video.statistics.dislikeCount) }</p>
+                            </div>
                         </div>
                         <FlatButton onClick={this.handleShareOpen} label="SHARE" style={{color: iconFill}} icon={<Share color={iconFill} style={{height: iconSize}} />} >
                         </FlatButton>
@@ -87,6 +97,7 @@ export default class VideoInfo extends Component {
                         </IconMenu>
                     </div>
                 </div>
+                <PercentageBar val={likes / (likes + dislikes)} totalWidth={likesTotalWidth}  />
                 <Divider />
             </div>
         )

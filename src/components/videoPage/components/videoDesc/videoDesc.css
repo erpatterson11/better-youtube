@@ -18,8 +18,19 @@
     flex: 1;
 }
 
+.video-desc-channel-title {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.video-desc-publish-date {
+    font-size: 13px;
+    color: rgba(17,17,17,0.6);
+}
+
 .video-desc-desc {
     padding-left: 51px;
     margin-bottom: 15px;
     white-space: pre-wrap;
+    font-size: 14px;
 }

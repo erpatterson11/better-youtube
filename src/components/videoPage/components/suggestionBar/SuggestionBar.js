@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import VideoLinkCard from '../videoLinkCard/VideoLinkCard'
+import VideoLinkCard from '../../../videoLinkCard/VideoLinkCard'
 
 import Toggle from 'material-ui/Toggle'
 import FlatButton from 'material-ui/FlatButton'
