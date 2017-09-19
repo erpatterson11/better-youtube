@@ -18,7 +18,7 @@ const controller = require('./controller')
 
 // constants
 const port = 3010
-const devPort = 3000
+const afterAuthRedirect = true ? "http://localhost:3000" : "https://youtubeclone.ericcpatterson.com"
 const ytApiConf = config.youtube.web
 
 
@@ -76,7 +76,7 @@ app.get("/oauthcallback", function(req, res) {
     if (!err) {
       oauth2Client.setCredentials(tokens)
       req.session.tokens = tokens
-      res.redirect(`http://localhost:${devPort}`)
+      res.redirect(afterAuthRedirect)
       return
     }
     res.status(500).send(err)
@@ -112,51 +112,3 @@ app.get('/api/youtube/videoPageDetails', controller.getVideoPageDetails)
 //////////////////////////////////////////////
 
 app.listen(port, () => console.log(`listening on ${port}`))
-
-
-
-//////////////////////////////////////////////
-// AUTH0
-//////////////////////////////////////////////
-
-// app.use(passport.initialize())
-// app.use(passport.session())
-// app.use(passport.initialize())
-// app.use(passport.session())
-// passport.use(new Auth0Strategy(config.auth0, function(accessToken, refreshToken, extraParams, profile, done) {
-//     profile.tokens = {
-//       accessToken,
-//       refreshToken
-//     }
-//     console.log("profile.tokens", profile.tokens.accessToken);
-//     return done(null, profile)
-// }))
-
-// passport.serializeUser(function(user,done) {
-//   done(null, user)
-// })
-
-// passport.deserializeUser(function(user,done) {
-//   done(null, user)
-// })
-
-
-// endpoints
-
-// app.get('/login', passport.authenticate('auth0'), function(req,res) {
-//     let path = req.query.path
-//   res.redirect(`/#!${path}`)
-// })
-
-// app.get('/auth/callback',
-// passport.authenticate('auth0', {
-//   failureRedirect: '/login'
-// }), (req,res) => res.redirect(
-// // 'http://localhost:3000'
-// "/api/channels"
-// ))
-
-// // Get user info from Auth0
-// app.get('/api/me', function(req,res) {
-//   res.send(req.user)
-// })

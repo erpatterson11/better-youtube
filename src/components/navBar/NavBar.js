@@ -20,6 +20,7 @@ import Menu from 'material-ui/svg-icons/navigation/menu'
 
 import "./navBar.css"
 
+
 class NavBar extends Component {
 
     constructor(props) {
@@ -50,6 +51,8 @@ class NavBar extends Component {
     }
 
     render() {
+
+        const loginUrl = true ? "http://localhost:3000" : "https://youtubeclone.ericcpatterson.com"
 
         let style = {
             height: "36px"
@@ -104,7 +107,7 @@ class NavBar extends Component {
                         backgroundColor="#167ac6" 
                         label="Sign In" 
                         labelColor="#ffffff" 
-                        onClick={() => window.location.href="http://localhost:3010/login"} 
+                        onClick={() => window.location.href=`${loginUrl}/login`} 
                     />
                 </div>
 
