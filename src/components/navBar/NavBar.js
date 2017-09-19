@@ -52,7 +52,7 @@ class NavBar extends Component {
 
     render() {
 
-        const loginUrl = true ? "http://localhost:3000" : "https://youtubeclone.ericcpatterson.com"
+        const loginUrl = false ? "http://localhost:3000" : "https://youtubeclone.ericcpatterson.com"
 
         let style = {
             height: "36px"

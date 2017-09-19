@@ -18,7 +18,7 @@ const controller = require('./controller')
 
 // constants
 const port = 3010
-const afterAuthRedirect = true ? "http://localhost:3000" : "https://youtubeclone.ericcpatterson.com"
+const afterAuthRedirect = false ? "http://localhost:3000" : "https://youtubeclone.ericcpatterson.com"
 const ytApiConf = config.youtube.web
 
 
