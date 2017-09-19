@@ -1,6 +1,6 @@
 // modules
 import React, { Component } from 'react'
-import {HashRouter as Router, Route, Switch} from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 // redux actions
@@ -16,6 +16,8 @@ import NavBar from './components/navBar/NavBar'
 // css
 import './app.css'
 
+
+const history = {}
 
 class App extends Component {
     constructor() {
@@ -67,12 +69,12 @@ class App extends Component {
       
       <SideMenu />
 
-        <Router>
+        <BrowserRouter history={history}>
           <Switch>
-              <Route exact path="/watch/:videoId" component={VideoPage} />
+              <Route exact path="/watch" component={VideoPage} />
               <Route path="*" component={VideoPage} />
           </Switch>
-        </Router>
+        </BrowserRouter>
 
         <NavBar videoSearch={this.props.getVideosSearch} setBrowse={this.props.setBrowse} searchResults={this.props.videos.searchResults} setVideo={this.handleSetVideo} />
       </div>

@@ -17,8 +17,8 @@ const config = require('./config')
 const controller = require('./controller')
 
 // constants
-const port = 3001
-const devClientPort = 3000
+const port = 3010
+const devPort = 3000
 const ytApiConf = config.youtube.web
 
 
@@ -76,7 +76,7 @@ app.get("/oauthcallback", function(req, res) {
     if (!err) {
       oauth2Client.setCredentials(tokens)
       req.session.tokens = tokens
-      res.redirect(`http://localhost:${devClientPort}`)
+      res.redirect(`http://localhost:${devPort}`)
       return
     }
     res.status(500).send(err)

@@ -91,7 +91,6 @@ export default class VideoInfo extends Component {
                             anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
                             targetOrigin={{horizontal: 'left', vertical: 'top'}}
                             onRequestClose={this.handleRequestClose}>
-
                         </Popover>
                         <IconMenu iconButtonElement={<IconButton><MoreHoriz color={iconFill} style={{height: 24}} /></IconButton>} >
                         </IconMenu>

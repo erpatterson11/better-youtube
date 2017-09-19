@@ -55,7 +55,6 @@ class NavBar extends Component {
             height: "36px"
         }
 
-
         return (
             <Paper className='nav-bar card flex-cont' zDepth={1}>
 
@@ -68,16 +67,45 @@ class NavBar extends Component {
 
                 <div className="search-container flex-cont">
                     <Paper className="input-container" zDepth={1}>
-                        <form onSubmit={this.handleSubmit}>
-                            <TextField id="search-input" className="input-bar" fullWidth={true} placeholder="Search" type="text" value={this.state.term} style={style} inputStyle={{paddingLeft: "15px"}} underlineShow={false} onChange={ e => this.handleTyping(e) } />
-                        </form>
-                        <SearchResults results={this.props.searchResults} nextPage={this.props.nextSearchToken} resultsDisplayed={this.state.resultsDisplayed}  closeResultsComponent={this.closeResultsComponent} setVideo={this.props.setVideo} getMore={this.props.getVideoSuggestions} />
+                        <TextField 
+                            id="search-input" 
+                            className="input-bar" 
+                            fullWidth={true} 
+                            placeholder="Search" 
+                            type="text" 
+                            value={this.state.term} 
+                            style={style} 
+                            inputStyle={{paddingLeft: "15px"}} 
+                            underlineShow={false} 
+                            onChange={ e => this.handleTyping(e) } 
+                            onKeyUp={ e => {
+                                e.preventDefault()
+                                if (e.keyCode === 13) this.handleSubmit()
+                            }}
+                        />
+                        <SearchResults 
+                            results={this.props.searchResults} 
+                            nextPage={this.props.nextSearchToken} 
+                            resultsDisplayed={this.state.resultsDisplayed}  
+                            closeResultsComponent={this.closeResultsComponent} 
+                            setVideo={this.props.setVideo} 
+                            getMore={this.props.getVideoSuggestions} 
+                        />
                     </Paper>
-                    <RaisedButton icon={<SearchIcon />} style={{borderTopLeftRaduis: "0px", borderBottomLeftRaduis: "0px"}} onClick={this.handleSubmit} />
+                    <RaisedButton 
+                        icon={<SearchIcon />} 
+                        style={{borderTopLeftRaduis: "0px", borderBottomLeftRaduis: "0px"}} 
+                        onClick={this.handleSubmit} 
+                    />
                 </div>
 
                 <div className="action-container flex-cont">
-                    <RaisedButton backgroundColor="#167ac6" label="Sign In" labelColor="#ffffff" onClick={() => window.location.href="http://localhost:3001/login"} />
+                    <RaisedButton 
+                        backgroundColor="#167ac6" 
+                        label="Sign In" 
+                        labelColor="#ffffff" 
+                        onClick={() => window.location.href="http://localhost:3010/login"} 
+                    />
                 </div>
 
             </Paper>
