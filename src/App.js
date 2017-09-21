@@ -1,6 +1,6 @@
 // modules
 import React, { Component } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 // redux actions
@@ -8,6 +8,7 @@ import * as videoReducerActions from './store/reducers/selectedVideoReducer'
 import { setBrowse } from './store/reducers/browseReducer'
 
 // components
+import HomePage from './components/homePage/HomePage'
 import VideoPlayer from './components/videoPlayer/VideoPlayer'
 import VideoPage from './components/videoPage/VideoPage'
 import SideMenu from './components/sideMenu/SideMenu'
@@ -69,10 +70,11 @@ class App extends Component {
       
       <SideMenu />
 
-        <BrowserRouter history={history}>
+        <BrowserRouter history={history} >
           <Switch>
               <Route exact path="/watch" component={VideoPage} />
-              <Route path="*" component={VideoPage} />
+              <Route exact path="/" component={HomePage} />
+              <Route path="*" component={HomePage} />
           </Switch>
         </BrowserRouter>
 

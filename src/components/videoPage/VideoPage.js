@@ -14,13 +14,12 @@ import "./videoPage.css"
 
 class VideoPage extends Component {
 
-    componentDidMount() {
-      const vidPlaceholder = this.refs.vidPlaceholder.getBoundingClientRect()
-    }
+  componentDidMount() {
+    const vidPlaceholder = this.refs.vidPlaceholder.getBoundingClientRect()
+  }
   
 
   render() {
-
     const { selectedVideo, selectedVideoComments, commentsLoading, suggestedVideos, videoChannelProfile } = this.props.videos
     const { browsing } = this.props.browse
 

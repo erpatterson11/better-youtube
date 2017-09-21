@@ -1,3 +1,7 @@
+/*
+Horizonal Styling
+*/
+
 .video-link-card {
     cursor: pointer;
     display: flex;
@@ -29,3 +33,49 @@
     font-size: 13px;
     color: rgba(17,17,17, 0.6)
 }
+
+/*
+Vertical Styling
+*/
+
+.video-link-card-vertical {
+    width: 214px;
+    height: 205px;
+    padding-right: 4px;
+    cursor: pointer;
+    margin-bottom: 25px;
+}
+
+
+.video-link-pic-vertical {
+    width: 210px;
+    height: 118px;
+    background-size: cover;
+}
+ 
+.video-link-text-vertical {
+    padding-top: 12px;
+    line-height: 18px;
+    flex: 1;
+}
+
+.video-link-title-container-vertical {
+    display: flex;
+    justify-content: space-between;
+}
+
+.video-link-title-vertical {
+    overflow: hidden;
+    height: 36px;
+    width: 186px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgb(17,17,17);
+    margin-bottom: 8px;
+}
+
+.video-link-channel-vertical {
+    font-size: 13px;
+    color: rgba(17,17,17, 0.6)
+}
+
