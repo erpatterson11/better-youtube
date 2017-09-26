@@ -1,7 +1,7 @@
 .video-carousel-container {
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    overflow: hidden;
     height: 230px;
+    transition: 0.15s;
+    transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
+

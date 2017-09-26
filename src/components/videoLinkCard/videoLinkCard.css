@@ -24,14 +24,26 @@ Horizonal Styling
 }
  
 .video-link-title {
+    overflow: hidden;
+    height: 36px;
     font-size: 14px;
     font-weight: 500;
-    color: rgb(17,17,17)
+    color: rgb(17,17,17);
+    margin-bottom: 8px;
+}
+
+.video-link-title-container {
+    display: flex;
+    justify-content: space-between;
 }
 
 .video-link-channel {
     font-size: 13px;
-    color: rgba(17,17,17, 0.6)
+    color: rgba(17,17,17, 0.6);
+}
+
+.video-link-channel:hover {
+    color: rgba(17,17,17,0.8);
 }
 
 /*
@@ -74,8 +86,12 @@ Vertical Styling
     margin-bottom: 8px;
 }
 
-.video-link-channel-vertical {
+.video-link-channel-vertical, .video-link-details-vertical {
     font-size: 13px;
     color: rgba(17,17,17, 0.6)
+}
+
+.video-link-channel-vertical:hover {
+    color: rgba(17,17,17,0.8);
 }
 
