@@ -1,6 +1,6 @@
 // modules
 import React, { Component } from 'react'
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 // redux actions
@@ -17,8 +17,6 @@ import NavBar from './components/navBar/NavBar'
 // css
 import './app.css'
 
-
-const history = {}
 
 class App extends Component {
     constructor() {
@@ -51,15 +49,15 @@ class App extends Component {
 
         if (top > 15 && this.props.browse.browsing === false) this.props.setBrowse(true)
         else if (top < 15 && this.props.browse.browsing) this.props.setBrowse(false)
-
-        if (this.props.videos.selectedVideo.hasOwnProperty('id') && totalHeight == top + clientHeight) this.props.getVideoComments(this.props.videos.selectedVideo.id)
+        
+        if (this.props.videos.selectedVideo.hasOwnProperty('id') && totalHeight == top + clientHeight) this.props.getVideoComments(this.props.videos.selectedVideo.id, this.props.selectedVideoNextCommentsToken)
     }
 
     handleSetVideo = (video) => {
+      console.log(video.id.videoId)
       this.props.getVideoStats(video.id.videoId)
       this.props.setBrowse(false)
       this.props.getChannelStats(video.snippet.channelId)
-      // this.props.getVideoComments(video.id.videoId)
       this.props.getVideoSuggestions( video.id.videoId )
     }
 
@@ -68,16 +66,12 @@ class App extends Component {
     return (
       <div className="App" >
       
-      <SideMenu />
-
-        <BrowserRouter history={history} >
-          <Switch>
-              <Route exact path="/watch" component={VideoPage} />
-              <Route exact path="/" component={HomePage} />
-              <Route path="*" component={HomePage} />
-          </Switch>
-        </BrowserRouter>
-
+        <SideMenu />
+        <Switch>
+            <Route path="/watch" component={VideoPage} />
+            <Route exact path="" component={HomePage} />
+            <Route path="*" component={HomePage} />
+        </Switch>
         <NavBar videoSearch={this.props.getVideosSearch} setBrowse={this.props.setBrowse} searchResults={this.props.videos.searchResults} setVideo={this.handleSetVideo} />
       </div>
     )
@@ -88,7 +82,7 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     videos: state.selectedVideoReducer,
-    browse: state.browseReducer
+    browse: state.browseReducer,
   }
 }
 

@@ -11,6 +11,8 @@ import Divider from 'material-ui/Divider'
 
 // REDUX
 import { connect } from 'react-redux'
+import * as videoReducerActions from '../../store/reducers/selectedVideoReducer'
+
 
 // OTHER
 
@@ -42,13 +44,21 @@ class HomePage extends Component {
     // RENDER
 
     render() {
+
+        const handleSetVideo = (video) => {
+            this.props.getVideoStats(video.id.videoId)
+            this.props.getVideoSuggestions( video.id.videoId )
+            this.props.getChannelStats( video.snippet.channelId )
+            console.log(video);
+        }
+
         return (
             <div className="home-page-container">
-                <RecommendedCarousel />
+                <RecommendedCarousel handleSetVideo={handleSetVideo} />
                 <Divider />
-                <RecommendedCarousel />
+                <RecommendedCarousel handleSetVideo={handleSetVideo}/>
                 <Divider />
-                <RecommendedCarousel />
+                <RecommendedCarousel handleSetVideo={handleSetVideo}/>
                 <p>This is the home page</p>
             </div>
         )
@@ -71,4 +81,4 @@ function mapDispatchToProps() {
 
 // REDUX EXPORT
 
-export default connect( mapStateToProps )(HomePage)
+export default connect( mapStateToProps, videoReducerActions )(HomePage)

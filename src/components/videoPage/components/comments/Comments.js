@@ -16,6 +16,7 @@ import IconButton from 'material-ui/IconButton'
 import MenuItem from 'material-ui/MenuItem'
 import Sort from 'material-ui/svg-icons/content/sort'
 import CircularProgress from 'material-ui/CircularProgress'
+import Paper from 'material-ui/Paper'
 
 // CSS
 import './comments.css'
@@ -24,9 +25,13 @@ import './comments.css'
 // Component
 export default class Comments extends Component {
 
+    shouldComponentUpdate(nextProps) {
+        return nextProps.comments !== this.props.comments
+    }
+
     render() {
 
-        let displayComments = () => this.props.comments.map( (comment,i) => <Comment comment={comment.snippet.topLevelComment.snippet} publishedAgo={moment( moment(comment.publishedAt) ).fromNow()} key={comment.id} />)        
+        let displayComments = () => this.props.comments.map( (comment,i) => <Comment key={i + comment.id} comment={comment.snippet.topLevelComment.snippet} publishedAgo={moment( moment(comment.publishedAt) ).fromNow()} />)        
 
         if (this.props.loading || this.props.comments.length === 0) return <div className="progress-container"><CircularProgress /></div>
 

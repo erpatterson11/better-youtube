@@ -1,5 +1,6 @@
 .comments {
     grid-area: comments;
+    margin-bottom: 50px;
 }
 
 .comments-toolbar {
@@ -19,7 +20,6 @@
     font-weight: 500;
     margin-left: 40px;
     width: 90px;
-
 }
 
 .progress-container {

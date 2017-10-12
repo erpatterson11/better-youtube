@@ -11,7 +11,6 @@ export default function PercentageBar({val, totalWidth}) {
 
         return (
             <div className="percentage-bar-component" >
-                <div className="percentage-bar-placeholder" ></div>
                 <div className="percentage-bar-container" style={{width: totalWidth}}>
                     <div className="percentage-bar-fill" style={style}></div>
                 </div>

@@ -9,20 +9,14 @@ export function videoSearch(searchTerm) {
         })
 }
 
-export function getVideoComments(videoId) {
-    return axios.get( `${urlPrefix}/api/youtube/comments?videoId=${videoId}` )
+export function getVideoComments(videoId, nextPageToken) {
+    return axios.get( `${urlPrefix}/api/youtube/comments?videoId=${videoId}&nextPageToken=${nextPageToken}` )
         .then( res => {
             console.log('comments', res.data)
             return res.data
         })
 }
 
-export function getMoreComments(videoId) {
-    return axios.get( `${urlPrefix}/api/youtube/comments?videoId=${videoId}` )
-        .then( res => {
-            return res.data
-        })
-}
 
 export function getVideoSuggestions(videoId) {
     return axios.get( `${urlPrefix}/api/youtube/suggested?videoId=${videoId}` )

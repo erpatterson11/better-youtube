@@ -1,8 +1,8 @@
-// modules
+// MODULES
 const axios = require('axios')
 const config = require('./config')
 
-// constants
+// CONSTANTS
 const ytApi = 'https://www.googleapis.com/youtube/v3'
 const apiKey = config.youtube.apiKey
 
@@ -11,6 +11,8 @@ const bindContextAll = (list,arg) => {
 }
 
 
+
+// EXPORT OBJECT
 const funcs = {
 
     getVideosBySearch: function(req,res,next) {
@@ -23,11 +25,15 @@ const funcs = {
     },
 
     getVideoComments: function(req,res,next) {
-        const videoId = req.query.videoId
-        const url = `${ytApi}/commentThreads?part=snippet&videoId=${videoId}&key=${apiKey}`
+        const { videoId, nextPageToken } = req.query
+        console.log("page token: ", req.query)
+        const nextPage = nextPageToken !== "undefined" ? `&pageToken=${nextPageToken}` : ""
+        console.log("next page: ", nextPage)
+        const url = `${ytApi}/commentThreads?part=snippet&videoId=${videoId}${nextPage}&key=${apiKey}`
         axios.get(url)
             .then( comments => res.status(200).send(comments.data) )
     },
+
 
     getSuggestedVideos: function(req,res,next) {
         const videoId = req.query.videoId

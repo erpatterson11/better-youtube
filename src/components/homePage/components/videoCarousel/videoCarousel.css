@@ -1,4 +1,9 @@
-.video-carousel-container {
+.video-carousel-container { 
+    height: 230px;
+    overflow-x: hidden;
+}
+
+.video-carousel-content {
     display: flex;
     height: 230px;
     transition: 0.15s;

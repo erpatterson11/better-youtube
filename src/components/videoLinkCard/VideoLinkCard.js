@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
@@ -14,12 +15,26 @@ export default class VideoLinkCard extends Component {
         super(props)
         this.state = {
             buttonIsShown: false,
+            buttonMenuIsOpen: false,
             isVert: this.props.vertical ? "-vertical" : ""
         }
     }
 
-    toggleButton = (bool) => {
+    toggleButton(bool) {
         this.setState({buttonIsShown: bool})
+        // // if mouse is hovering show button
+        // if (!this.state.buttonIsShown) {
+        //     this.setState({buttonIsShown: true})
+        // }
+        // // if mouse is leaving and button isn't open hide button
+        // if (!this.state.buttonMenuIsOpen && this.state.buttonIsShown) {
+        //     this.setState({buttonIsShown: bool})
+        // }
+
+        // // if mouse is leaving and button is open do nothing
+        //  else if (!this.state.button) {
+
+        // }
     }   
 
 
@@ -35,6 +50,7 @@ export default class VideoLinkCard extends Component {
                         <MoreVert color="rgba(17,17,17,0.4)" hoverColor="rgb(17,17,17)" />
                     </IconButton>
                 }
+                onRequestChange={(open) => this.setState({buttonMenuIsOpen: open})}
                 >
                 <MenuItem primaryText="Not interested" />
                 <MenuItem primaryText="Add to Watch later"/>
@@ -42,19 +58,17 @@ export default class VideoLinkCard extends Component {
             </IconMenu>
         )
 
-        const buttonPlaceholder = <div style={{width: "24px", height: "24px"}}></div>
-
-        const renderButton = () => this.state.buttonIsShown ? button : null
-
-
         return (
             <div className={`video-link-card${this.state.isVert}`} onMouseEnter={ () => this.toggleButton(true) } onMouseLeave={ () => this.toggleButton(false) } > 
-                <div className={`video-link-pic${this.state.isVert}`} onClick={ () => setVideo(video) } style={{backgroundImage: `url(${image.url})`}}>
-                </div>
+                <Link to="/watch">
+                    <div className={`video-link-pic${this.state.isVert}`} onClick={ () => setVideo(video) } style={{backgroundImage: `url(${image.url})`}}></div>
+                </Link>
                 <div className={`video-link-text${this.state.isVert}`}>
                     <div className={`video-link-title-container${this.state.isVert}`}>
+                    <Link to="/watch">
                         <p className={`video-link-title${this.state.isVert}`} onClick={ () => setVideo(video) } >{video.snippet.title}</p>
-                        {renderButton()}
+                    </Link>
+                        {this.state.buttonIsShown ? button : null}
                     </div>
                     <p className={`video-link-channel${this.state.isVert}`}>{video.snippet.channelTitle}</p>
                     { vertical ? <p className={'video-link-details-vertical'}>57K views * 2 days ago</p> : null }

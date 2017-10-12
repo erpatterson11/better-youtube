@@ -41,8 +41,6 @@ class VideoCarousel extends Component {
 
         // BIND CUSTOM FUNCS
         this.move = this.move.bind(this)
-        // this.moveLeft = this.moveLeft.bind(this)
-        // this.moveRight = this.moveRight.bind(this)
     }
 
     componentDidMount() {
@@ -92,88 +90,24 @@ class VideoCarousel extends Component {
         }
     } 
 
-    // moveRight() {
-
-    //     const mediaQueries = {
-    //         1305: 1070,
-    //         1090: 856,
-    //         875: 642,
-    //         660: 428
-    //     }
-
-    //     const videoCardWidth = 214
-
-    //     let windowCapacity = ~~(this.refs.carousel.clientWidth / videoCardWidth)
-
-
-    //     const numInWindow = width => { 
-    //         return ~~(mediaQueries[width] / videoCardWidth) }
-
-    //     // let windowCapacity = numInWindow(1305)
-    //     let remainingRight = videos.length - this.state.indexLeft - windowCapacity
-    //     let stepsLeft = windowCapacity >= remainingRight ? remainingRight : windowCapacity
-    //     let transform = this.state.transform - stepsLeft
-    //     let newIndexLeft = this.state.indexLeft + stepsLeft
-    //     let showScrollRight = newIndexLeft !== videos.length - windowCapacity ? "initial" : "none"
-
-    //     let carouselStyle = {transform: `translateX(${transform * videoCardWidth}px)`}
-    //     this.setState({
-    //         carouselStyle, 
-    //         indexLeft: newIndexLeft, 
-    //         transform,
-    //         showScrollRight,
-    //         showScrollLeft: "initial"
-    //     }, () => console.log(newIndexLeft,videos.length, windowCapacity))
-    // }
-
-    // moveLeft() {
-
-    //     const mediaQueries = {
-    //         1305: 1070,
-    //         1090: 856,
-    //         875: 642,
-    //         660: 428
-    //     }
-
-    //     const videoCardWidth = 214
-
-    //     const numInWindow = width => { 
-    //         return ~~(mediaQueries[width] / videoCardWidth) }
-
-    //     let windowCapacity = ~~(this.refs.carousel.clientWidth / videoCardWidth)
-
-
-    //     // let windowCapacity = numInWindow(1305)
-    //     let stepsRight = this.state.indexLeft < windowCapacity ? this.state.indexLeft : windowCapacity
-    //     let transform = this.state.transform + stepsRight
-    //     let newIndexLeft = this.state.indexLeft - stepsRight
-    //     let showScrollLeft = newIndexLeft ? "initial" : "none"
-
-
-    //     let carouselStyle = {transform: `translateX(${transform * videoCardWidth}px)`}
-    //     this.setState({
-    //         carouselStyle, 
-    //         indexLeft: newIndexLeft, 
-    //         transform,
-    //         showScrollLeft,
-    //         showScrollRight: "initial"
-    //     })
-    // }
-
 
     // RENDER
     render() {
 
+        const setVideo = this.props.handleSetVideo
+
         const renderVideos = function() {
-            return videos.map( (vid, i) => <VideoLinkCard key={vid.id.videoId + i} video={vid} vertical /> )
+            return videos.map( (vid, i) => <VideoLinkCard vertical key={vid.id.videoId + i} video={vid}  setVideo={setVideo} /> )
         }
 
         return (
             <div style={{position: "relative"}} >
                 <CarouselButton dir="left" move={() => this.move("left")} show={this.state.showScrollLeft} />
                 <CarouselButton dir="right" move={() => this.move("right")} show={this.state.showScrollRight}/>
-                <div className="video-carousel-container" ref="carousel" style={this.state.carouselStyle} >
-                    {renderVideos()}
+                <div className="video-carousel-container">    
+                    <div className="video-carousel-content" ref="carousel" style={this.state.carouselStyle} >
+                        {renderVideos()}
+                    </div>
                 </div>
             </div>
         )

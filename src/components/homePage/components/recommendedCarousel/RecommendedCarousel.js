@@ -41,7 +41,7 @@ class RecommendedCarousel extends Component {
         return (
             <div className="recommended-carousel">
                 <CarouselBanner />
-                <VideoCarousel />
+                <VideoCarousel handleSetVideo={this.props.handleSetVideo}/>
             </div>
         )
     }
