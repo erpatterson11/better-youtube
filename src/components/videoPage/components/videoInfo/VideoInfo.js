@@ -37,6 +37,7 @@ export default class VideoInfo extends Component {
 
         this.handlePlaylistOpen = this.handlePlaylistOpen.bind(this)
         this.handleShareOpen = this.handleShareOpen.bind(this)
+        this.handlePopoverClose = this.handlePopoverClose.bind(this)
     }
    
     handlePlaylistOpen = (e) => {
@@ -47,8 +48,8 @@ export default class VideoInfo extends Component {
         this.setState({shareOpen: true, shareAnchor: e.currentTarget})
     }
 
-    handlePopoverClose(e) {
-        this.setState({[`${e}Open`]: false})
+    handlePopoverClose(comp) {
+        this.setState({[`${comp}Open`]: false})
     }
 
     render() {
@@ -86,12 +87,12 @@ export default class VideoInfo extends Component {
                         <FlatButton onClick={this.handleShareOpen} label="SHARE" style={{color: iconFill}} icon={<Share color={iconFill} style={{height: iconSize}} />} >
                         </FlatButton>
                         <IconButton onClick={this.handlePlaylistOpen} ><PlaylistAdd color={iconFill} style={{height: iconSize}} /></IconButton>
-                        <Popover 
-                            open={this.state.playlistOpen}
-                            anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-                            targetOrigin={{horizontal: 'left', vertical: 'top'}}
-                            onRequestClose={this.handleRequestClose}>
-                        </Popover>
+                            <Popover 
+                                open={this.state.playlistOpen}
+                                anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                                targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                                onRequestClose={() => this.handlePopoverClose("playlist")}>
+                            </Popover>
                         <IconMenu iconButtonElement={<IconButton><MoreHoriz color={iconFill} style={{height: 24}} /></IconButton>} >
                         </IconMenu>
                     </div>

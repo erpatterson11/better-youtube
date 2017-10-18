@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+
 import * as DockActions from '../../store/reducers/dockReducer'
 import { getVideoSuggestions } from '../../store/reducers/selectedVideoReducer'
 
@@ -65,7 +67,10 @@ class NavBar extends Component {
                     <IconButton icon  onClick={this.props.toggleDock} >
                         <Menu  color="rgba(17,17,17,0.4" />
                     </IconButton>
-                    <YtLogo height="24px" />
+                  
+                    <Link to="">
+                        <YtLogo height="24px" />
+                    </Link>                    
                 </div>
 
                 <div className="search-container flex-cont">

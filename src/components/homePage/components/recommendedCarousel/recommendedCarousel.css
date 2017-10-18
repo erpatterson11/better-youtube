@@ -1,0 +1,31 @@
+.recommended-carousel {
+    display: flex;
+    flex-direction: column;
+    width: 1284px;
+}
+
+
+
+@media (max-width: 1305px) {
+    .recommended-carousel {
+        width: 1070px;
+    }
+}
+
+@media (max-width: 1090px) {
+    .recommended-carousel {
+        width: 856px;
+    }
+}
+
+@media (max-width: 875px) {
+    .recommended-carousel {
+        width: 642px;
+    }
+}
+
+@media (max-width: 660px) {
+    .recommended-carousel {
+        width: 428px;
+    }
+}

@@ -5,6 +5,7 @@ import * as searchService from '../../services/searchService'
 const initialState = {
     selectedVideo: {},
     selectedVideoComments: [],
+    selectedVideoNextCommentsToken: "",
     videoChannelProfile: {},
     nextCommentsToken: "", 
     suggestedVideos: [],
@@ -29,10 +30,6 @@ const GET_VIDEO_STATS_FULFILLED = 'GET_VIDEO_STATS_FULFILLED'
 const GET_VIDEO_COMMENTS = "GET_VIDEO_COMMENTS"
 const GET_VIDEO_COMMENTS_PENDING = "GET_VIDEO_COMMENTS_PENDING"
 const GET_VIDEO_COMMENTS_FULFILLED = "GET_VIDEO_COMMENTS_FULFILLED"
-
-const GET_MORE_COMMENTS = "GET_MORE_COMMENTS"
-const GET_MORE_COMMENTS_PENDING = "GET_MORE_COMMENTS_PENDING"
-const GET_MORE_COMMENTS_FULFILLED = "GET_MORE_COMMENTS_FULFILLED"
 
 const GET_SUGGESTED_VIDEOS = "GET_SUGGESTED_VIDEOS"
 const GET_SUGGESTED_VIDEOS_PENDING = "GET_SUGGESTED_VIDEOS_PENDING"
@@ -64,12 +61,7 @@ export default function selectedVideoReducer( state=initialState, action ) {
         case GET_VIDEO_COMMENTS_PENDING:
             return Object.assign({}, state, {commentsLoading: true})
         case GET_VIDEO_COMMENTS_FULFILLED:
-            return Object.assign({}, state, {selectedVideoComments: [...action.payload.items], commentsLoading: false})
-
-        case GET_MORE_COMMENTS_PENDING:
-            return Object.assign({}, state, {commentsLoading: true})
-        case GET_MORE_COMMENTS_FULFILLED:
-            return Object.assign({}, state, {selectedVideoComments: [...state.selectedVideoComments, ...action.payload.items], commentsLoading: false})
+            return Object.assign({}, state, {selectedVideoComments: [...state.selectedVideoComments, ...action.payload.items], selectedVideoNextCommentsToken: action.payload.nextPageToken, commentsLoading: false})
 
         case GET_SUGGESTED_VIDEOS_PENDING:
             return Object.assign({}, state)
@@ -101,17 +93,10 @@ export function getVideosSearch(searchTerm) {
     }
 }
 
-export function getVideoComments(videoId) {
+export function getVideoComments(videoId, nextPageToken) {
     return {
         type: GET_VIDEO_COMMENTS,
-        payload: searchService.getVideoComments(videoId)
-    }
-}
-
-export function getMoreComments() {
-    return {
-        type: GET_MORE_COMMENTS,
-        payload: searchService.getMoreComments()
+        payload: searchService.getVideoComments(videoId, nextPageToken)
     }
 }
 

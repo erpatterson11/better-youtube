@@ -1,6 +1,6 @@
 // modules
 import React, { Component } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 // redux actions
@@ -8,74 +8,72 @@ import * as videoReducerActions from './store/reducers/selectedVideoReducer'
 import { setBrowse } from './store/reducers/browseReducer'
 
 // components
+import HomePage from './components/homePage/HomePage'
 import VideoPlayer from './components/videoPlayer/VideoPlayer'
 import VideoPage from './components/videoPage/VideoPage'
 import SideMenu from './components/sideMenu/SideMenu'
 import NavBar from './components/navBar/NavBar'
 
+// utils
+import Util from './services/funcsService'
+
 // css
 import './app.css'
 
 
-const history = {}
-
 class App extends Component {
-    constructor() {
-        super() 
+  constructor() {
+      super() 
 
-        this.state = {
-          open: false
-        }
+      this.state = {
+        open: false
+      }
 
-        this.handleScroll = this.handleScroll.bind(this)
-        this.handleSetVideo = this.handleSetVideo.bind(this)
-    }
+      this.handleScroll = this.handleScroll.bind(this)
+      this.handleSetVideo = this.handleSetVideo.bind(this)
+  }
 
-    // React lifestyle methods
+  // React lifestyle methods
+  componentDidMount() {
+      window.addEventListener('scroll', this.handleScroll)
+  }
 
-    componentDidMount() {
-        window.addEventListener('scroll', this.handleScroll)
-    }
+  componentWillUnmount() {
+      window.removeEventListener('scroll', this.handleScroll)
+  }
 
-    componentWillUnmount() {
-        window.removeEventListener('scroll', this.handleScroll)
-    }
+  // Custom methods
+  handleScroll(e) {
+      let top = e.srcElement.scrollingElement.scrollTop
+      let totalHeight = document.documentElement.scrollHeight
+      let clientHeight = document.documentElement.clientHeight
 
-    // Custom methods
+      if (top > 15 && this.props.browse.browsing === false) this.props.setBrowse(true)
+      else if (top < 15 && this.props.browse.browsing) this.props.setBrowse(false)
+      if (this.props.videos.selectedVideo.hasOwnProperty('id') && totalHeight == top + clientHeight) {
+        this.props.getVideoComments(this.props.videos.selectedVideo.id, this.props.videos.selectedVideoNextCommentsToken)
+      }
+  }
 
-    handleScroll(e) {
-        let top = e.srcElement.scrollingElement.scrollTop
-        let totalHeight = document.documentElement.scrollHeight
-        let clientHeight = document.documentElement.clientHeight
-
-        if (top > 15 && this.props.browse.browsing === false) this.props.setBrowse(true)
-        else if (top < 15 && this.props.browse.browsing) this.props.setBrowse(false)
-
-        if (this.props.videos.selectedVideo.hasOwnProperty('id') && totalHeight == top + clientHeight) this.props.getVideoComments(this.props.videos.selectedVideo.id)
-    }
-
-    handleSetVideo = (video) => {
-      this.props.getVideoStats(video.id.videoId)
-      this.props.setBrowse(false)
-      this.props.getChannelStats(video.snippet.channelId)
-      // this.props.getVideoComments(video.id.videoId)
-      this.props.getVideoSuggestions( video.id.videoId )
-    }
+  handleSetVideo = (video) => {
+    console.log(video.id.videoId)
+    this.props.getVideoStats(video.id.videoId)
+    this.props.setBrowse(false)
+    this.props.getChannelStats(video.snippet.channelId)
+    this.props.getVideoSuggestions( video.id.videoId )
+  }
 
   render() {
 
     return (
       <div className="App" >
       
-      <SideMenu />
-
-        <BrowserRouter history={history}>
-          <Switch>
-              <Route exact path="/watch" component={VideoPage} />
-              <Route path="*" component={VideoPage} />
-          </Switch>
-        </BrowserRouter>
-
+        <SideMenu />
+        <Switch>
+            <Route path="/watch" component={VideoPage} />
+            <Route exact path="" component={HomePage} />
+            <Route path="*" component={HomePage} />
+        </Switch>
         <NavBar videoSearch={this.props.getVideosSearch} setBrowse={this.props.setBrowse} searchResults={this.props.videos.searchResults} setVideo={this.handleSetVideo} />
       </div>
     )
@@ -86,7 +84,7 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     videos: state.selectedVideoReducer,
-    browse: state.browseReducer
+    browse: state.browseReducer,
   }
 }
 

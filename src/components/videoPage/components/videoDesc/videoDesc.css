@@ -1,5 +1,6 @@
 .video-desc {
     grid-area: video-description;
+    position: relative;
 }
 
 .video-desc-header {
@@ -33,4 +34,10 @@
     margin-bottom: 15px;
     white-space: pre-wrap;
     font-size: 14px;
+}
+
+.video-desc-show-button {
+    position: absolute;
+    bottom: 10px;
+    left: 40px;
 }

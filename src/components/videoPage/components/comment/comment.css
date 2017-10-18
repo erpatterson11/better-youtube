@@ -44,6 +44,13 @@
     font-size: 14px;
 }
 
+.comment-show-more-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgb(17,17,17);
+    cursor: pointer;
+}
+
 .comment-action-container {
     display: flex;
     align-items: center;

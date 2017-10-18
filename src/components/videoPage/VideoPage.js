@@ -14,14 +14,12 @@ import "./videoPage.css"
 
 class VideoPage extends Component {
 
-    componentDidMount() {
-      const vidPlaceholder = this.refs.vidPlaceholder.getBoundingClientRect()
-    }
-  
+  componentDidMount() {
+    const vidPlaceholder = this.refs.vidPlaceholder.getBoundingClientRect()
+  }
 
   render() {
-
-    const { selectedVideo, selectedVideoComments, commentsLoading, suggestedVideos, videoChannelProfile } = this.props.videos
+    const { selectedVideo, selectedVideoComments, commentsLoading, suggestedVideos, videoChannelProfile, selectedVideoNextCommentsToken } = this.props.videos
     const { browsing } = this.props.browse
 
     const handleSetVideo = (video) => {
@@ -36,7 +34,7 @@ class VideoPage extends Component {
           <VideoPlayer minify={this.props.browse.browsing} video={selectedVideo} />
           <VideoInfo vidInfo={selectedVideo} />
           <VideoDesc vidInfo={selectedVideo} channel={videoChannelProfile} />
-          <Comments video={selectedVideo} comments={selectedVideoComments} loading={commentsLoading} />
+          <Comments video={selectedVideo} comments={selectedVideoComments} loading={commentsLoading} getMoreComments={() => this.props.getMoreVideoComments(this.props.videos.selectedVideo.id, selectedVideoNextCommentsToken)}/>
           <SuggestionBar setVideo={handleSetVideo} suggested={suggestedVideos} />
       </div>
     )

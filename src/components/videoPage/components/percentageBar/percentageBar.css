@@ -1,16 +1,9 @@
-.percentage-bar-component {
-    display: flex;
-}
-
-.percentage-bar-placeholder {
-    flex-basis: 50%;
-}
 
 .percentage-bar-container {
-    /*flex: 1;*/
     width: 135px;
     height: 2px;
     background: rgba(136, 136, 136, 0.4);
+    margin-left: calc(100% - 312px);
 }
 
 .percentage-bar-fill {

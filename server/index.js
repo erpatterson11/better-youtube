@@ -91,6 +91,7 @@ app.get("/oauthcallback", function(req, res) {
 app.get('/api/youtube/video', controller.getVideosBySearch)
 app.get('/api/youtube/suggested', controller.getSuggestedVideos)
 app.get('/api/youtube/comments', controller.getVideoComments)
+app.get('/api/youtube/commentReplies', controller.getCommentReplies)
 app.get('/api/youtube/channel/:id', controller.getChannelInfo)
 app.get('/api/youtube/video/:id', controller.getVideoStatsById)
 
