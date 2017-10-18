@@ -31,10 +31,6 @@ const GET_VIDEO_COMMENTS = "GET_VIDEO_COMMENTS"
 const GET_VIDEO_COMMENTS_PENDING = "GET_VIDEO_COMMENTS_PENDING"
 const GET_VIDEO_COMMENTS_FULFILLED = "GET_VIDEO_COMMENTS_FULFILLED"
 
-const GET_MORE_COMMENTS = "GET_MORE_COMMENTS"
-const GET_MORE_COMMENTS_PENDING = "GET_MORE_COMMENTS_PENDING"
-const GET_MORE_COMMENTS_FULFILLED = "GET_MORE_COMMENTS_FULFILLED"
-
 const GET_SUGGESTED_VIDEOS = "GET_SUGGESTED_VIDEOS"
 const GET_SUGGESTED_VIDEOS_PENDING = "GET_SUGGESTED_VIDEOS_PENDING"
 const GET_SUGGESTED_VIDEOS_FULFILLED = "GET_SUGGESTED_VIDEOS_FULFILLED"
@@ -67,12 +63,6 @@ export default function selectedVideoReducer( state=initialState, action ) {
         case GET_VIDEO_COMMENTS_FULFILLED:
             return Object.assign({}, state, {selectedVideoComments: [...state.selectedVideoComments, ...action.payload.items], selectedVideoNextCommentsToken: action.payload.nextPageToken, commentsLoading: false})
 
-        case GET_MORE_COMMENTS_PENDING:
-            return Object.assign({}, state, {commentsLoading: true})
-        case GET_MORE_COMMENTS_FULFILLED:
-            console.log(action.payload.nextPageToken);
-            return Object.assign({}, state, {selectedVideoComments: [...state.selectedVideoComments, ...action.payload.items], selectedVideoNextCommentsToken: action.payload.nextPageToken, commentsLoading: false})
-
         case GET_SUGGESTED_VIDEOS_PENDING:
             return Object.assign({}, state)
         case GET_SUGGESTED_VIDEOS_FULFILLED:
@@ -103,18 +93,9 @@ export function getVideosSearch(searchTerm) {
     }
 }
 
-export function getVideoComments(videoId) {
-    console.log( "getVideoComments", videoId);
+export function getVideoComments(videoId, nextPageToken) {
     return {
         type: GET_VIDEO_COMMENTS,
-        payload: searchService.getVideoComments(videoId)
-    }
-}
-
-export function getMoreVideoComments(videoId, nextPageToken) {
-    console.log( "get more comments", videoId, nextPageToken);
-    return {
-        type: GET_MORE_COMMENTS,
         payload: searchService.getVideoComments(videoId, nextPageToken)
     }
 }

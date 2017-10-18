@@ -18,7 +18,6 @@ const funcs = {
     getVideosBySearch: function(req,res,next) {
         const searchTerm = req.query.searchTerm
         const url = `${ytApi}/search?part=snippet&maxResults=20&type=video&q=${searchTerm}&key=${apiKey}`
-            console.log(url)
         axios.get(url)
             .then( videos => res.status(200).send(videos.data) )
             .catch( err => res.status(500).send(err))
@@ -26,14 +25,19 @@ const funcs = {
 
     getVideoComments: function(req,res,next) {
         const { videoId, nextPageToken } = req.query
-        console.log("page token: ", req.query)
         const nextPage = nextPageToken !== "undefined" ? `&pageToken=${nextPageToken}` : ""
-        console.log("next page: ", nextPage)
         const url = `${ytApi}/commentThreads?part=snippet&videoId=${videoId}${nextPage}&key=${apiKey}`
         axios.get(url)
             .then( comments => res.status(200).send(comments.data) )
     },
 
+    getCommentReplies: function(req,res,next) {
+        const { commentId } = req.query
+        const url = `${ytApi}/comments?part=snippet&parentId=${commentId}&key=${apiKey}`
+        axios.get(url)
+            .then( replies => res.status(200).send(replies.data))
+            .catch( err => res.status(500).send(err))
+    },
 
     getSuggestedVideos: function(req,res,next) {
         const videoId = req.query.videoId
@@ -52,7 +56,6 @@ const funcs = {
 
     getVideoStatsById: function(req,res,next) {
         const id = req.params.id 
-        console.log(id)
         let url = `${ytApi}/videos?part=snippet,statistics&id=${id}&key=${apiKey}`
         axios.get(url)
             .then( videoInfo => res.status(200).send(videoInfo.data) )
@@ -60,7 +63,6 @@ const funcs = {
     },
 
     getChannels: function(req,res,next) {
-        console.log("accessToken", req.session.tokens)
         const accessToken = req.session.tokens.access_token
         const url = `${ytApi}/channels?access_token=${accessToken}&part=snippet&mine=true&key=${apiKey}`
         axios.get(url)

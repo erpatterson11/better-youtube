@@ -17,6 +17,14 @@ export function getVideoComments(videoId, nextPageToken) {
         })
 }
 
+export function getVideoReplyComments(commentId) {
+    return axios.get(`${urlPrefix}/api/youtube/commentReplies?commentId=${commentId}`)
+        .then( res => {
+            console.log('comment replies: ', res.data)
+            return res.data
+        })
+}
+
 
 export function getVideoSuggestions(videoId) {
     return axios.get( `${urlPrefix}/api/youtube/suggested?videoId=${videoId}` )

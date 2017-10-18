@@ -19,7 +19,6 @@ export default class VideoDesc extends Component {
         this.state = {
             showingMore: false
         }
-
     }
 
     render() {
@@ -42,8 +41,6 @@ export default class VideoDesc extends Component {
         const showMoreLabel = this.state.showingMore ? "SHOW LESS" : "SHOW MORE"
 
         if ( Util.checkEmptyObj(video) ) return <div></div>
-
-        console.log(showMoreStyle, showMoreLabel)
 
         return (
             <div className="video-desc card" style={showMoreStyle}>

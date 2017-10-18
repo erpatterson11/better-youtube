@@ -1,6 +1,7 @@
 // React modules
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { getVideoReplyComments } from '../../../../services/searchService'
 
 // Redux 
 
@@ -21,68 +22,68 @@ import DownArrow from 'material-ui/svg-icons/hardware/keyboard-arrow-down'
 import "./comment.css"
 
 class Comment extends Component {
-    // constructor(props) {
-    //     super(props)
+    constructor(props) {
+        super(props)
 
-    //     this.state = {
-    //         key: "value"
-    //     }
+        this.state = {
+            showingMore: false,
+            commentHeight: 0,
+            commentReplies: []
+        }
+        this.getVideoReplyComments = this.getVideoReplyComments.bind(this)
+    }
 
-    //     // Bind custom methods
+    componentDidMount() {
+        const height = this.refs.commentText.clientHeight
+        this.setState({commentHeight: height})
+    }
 
-    // }
-
-    // Lifecyle methods
-
-    // componentWillMount() {
-
-    // }
-
-    // componentDidMount() {
-
-    // }
-
-    // componentWillUnmount() {
-
-    // }
-
-    // Custom methods
-
+    getVideoReplyComments() {
+        getVideoReplyComments(this.props.comment.topLevelComment.id)
+            .then( comments => this.setState({commentReplies: comments}, () => console.log(this.state)) )
+    }
     
     // Render
-
     render() {
 
         let color = "rgba(17,17,17,0.6)"
         let hoverColor = "rgb(17,17,17)"
 
         let comment = this.props.comment
+        if (!comment) return <div></div>
         let publishedAgo = this.props.publishedAgo
 
+        const showMoreStyle = this.state.showingMore ? {height: "auto", overflowY: "auto"} : {maxHeight: 100, overflowY: "hidden"}
+        const showMoreCommentStyle = this.state.showingMore ? {height: "auto", overflowY: "auto"} : {maxHeight: 85, overflowY: "hidden"}
+        const showMoreLabel = this.state.showingMore ? "Show less" : "Show more"
 
-        if (!comment) return <div></div>
+
 
         return (
             <div className="comment-component">
                     <div  className="comment-avatar" >
-                        <Avatar src={comment.authorProfileImageUrl} />
+                        <Avatar src={comment.topLevelComment.snippet.authorProfileImageUrl} />
                     </div> 
                     <div className="comment-text-container" >
                         <div className="comment-author-date-cont" >
-                            <p className="comment-author" > { comment.authorDisplayName } </p>
+                            <p className="comment-author" > { comment.topLevelComment.snippet.authorDisplayName } </p>
                             <p className="comment-time-ago" > { publishedAgo } </p>
                         </div>
-                        <p className="comment-text" > { comment.textOriginal } </p>
-                        <div className="comment-action-container" >
+                        <div style={showMoreStyle}>
+                            <p style={showMoreCommentStyle} ref="commentText" className="comment-text" > 
+                                { comment.topLevelComment.snippet.textOriginal } 
+                            </p>
+                        { this.state.commentHeight >= 85 &&
+                            <p className="comment-show-more-label" onClick={() => this.setState({showingMore: !this.state.showingMore})}>{showMoreLabel}</p>
+                        }
+                        </div>
+                        <div className="comment-action-container">
                             <p className="comment-reply-link"> REPLY </p>
-                            <p> { comment.likeCount } </p>
+                            <p> { comment.topLevelComment.snippet.likeCount } </p>
                             <ThumbUp className="comment-thumb" height="16px" color={color} hoverColor={hoverColor}  />
                             <ThumbDown className="comment-thumb" height="16px" color={color} hoverColor={hoverColor} />
                         </div>  
-                    <div className="comment-view-replies">
-                        <p > view replies </p>
-                        <DownArrow />
-                    </div>                             
+                        { comment.totalReplyCount && <div className="comment-view-replies" onClick={this.getVideoReplyComments}> <p> view all {comment.totalReplyCount} replies </p>  <DownArrow /> </div> }                             
                 </div>
             </div>
         )

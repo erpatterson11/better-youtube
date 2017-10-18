@@ -31,7 +31,7 @@ export default class Comments extends Component {
 
     render() {
 
-        let displayComments = () => this.props.comments.map( (comment,i) => <Comment key={i + comment.id} comment={comment.snippet.topLevelComment.snippet} publishedAgo={moment( moment(comment.publishedAt) ).fromNow()} />)        
+        let displayComments = () => this.props.comments.map( (comment,i) => <Comment key={i + comment.id} comment={comment.snippet} publishedAgo={moment( moment(comment.publishedAt) ).fromNow()} />)        
 
         if (this.props.loading || this.props.comments.length === 0) return <div className="progress-container"><CircularProgress /></div>
 

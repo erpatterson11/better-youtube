@@ -25,11 +25,11 @@ Horizonal Styling
  
 .video-link-title {
     overflow: hidden;
-    height: 36px;
+    max-height: 36px;
     font-size: 14px;
     font-weight: 500;
     color: rgb(17,17,17);
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .video-link-title-container {

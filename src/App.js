@@ -14,52 +14,54 @@ import VideoPage from './components/videoPage/VideoPage'
 import SideMenu from './components/sideMenu/SideMenu'
 import NavBar from './components/navBar/NavBar'
 
+// utils
+import Util from './services/funcsService'
+
 // css
 import './app.css'
 
 
 class App extends Component {
-    constructor() {
-        super() 
+  constructor() {
+      super() 
 
-        this.state = {
-          open: false
-        }
+      this.state = {
+        open: false
+      }
 
-        this.handleScroll = this.handleScroll.bind(this)
-        this.handleSetVideo = this.handleSetVideo.bind(this)
-    }
+      this.handleScroll = this.handleScroll.bind(this)
+      this.handleSetVideo = this.handleSetVideo.bind(this)
+  }
 
-    // React lifestyle methods
+  // React lifestyle methods
+  componentDidMount() {
+      window.addEventListener('scroll', this.handleScroll)
+  }
 
-    componentDidMount() {
-        window.addEventListener('scroll', this.handleScroll)
-    }
+  componentWillUnmount() {
+      window.removeEventListener('scroll', this.handleScroll)
+  }
 
-    componentWillUnmount() {
-        window.removeEventListener('scroll', this.handleScroll)
-    }
+  // Custom methods
+  handleScroll(e) {
+      let top = e.srcElement.scrollingElement.scrollTop
+      let totalHeight = document.documentElement.scrollHeight
+      let clientHeight = document.documentElement.clientHeight
 
-    // Custom methods
+      if (top > 15 && this.props.browse.browsing === false) this.props.setBrowse(true)
+      else if (top < 15 && this.props.browse.browsing) this.props.setBrowse(false)
+      if (this.props.videos.selectedVideo.hasOwnProperty('id') && totalHeight == top + clientHeight) {
+        this.props.getVideoComments(this.props.videos.selectedVideo.id, this.props.videos.selectedVideoNextCommentsToken)
+      }
+  }
 
-    handleScroll(e) {
-        let top = e.srcElement.scrollingElement.scrollTop
-        let totalHeight = document.documentElement.scrollHeight
-        let clientHeight = document.documentElement.clientHeight
-
-        if (top > 15 && this.props.browse.browsing === false) this.props.setBrowse(true)
-        else if (top < 15 && this.props.browse.browsing) this.props.setBrowse(false)
-        
-        if (this.props.videos.selectedVideo.hasOwnProperty('id') && totalHeight == top + clientHeight) this.props.getVideoComments(this.props.videos.selectedVideo.id, this.props.selectedVideoNextCommentsToken)
-    }
-
-    handleSetVideo = (video) => {
-      console.log(video.id.videoId)
-      this.props.getVideoStats(video.id.videoId)
-      this.props.setBrowse(false)
-      this.props.getChannelStats(video.snippet.channelId)
-      this.props.getVideoSuggestions( video.id.videoId )
-    }
+  handleSetVideo = (video) => {
+    console.log(video.id.videoId)
+    this.props.getVideoStats(video.id.videoId)
+    this.props.setBrowse(false)
+    this.props.getChannelStats(video.snippet.channelId)
+    this.props.getVideoSuggestions( video.id.videoId )
+  }
 
   render() {
 
