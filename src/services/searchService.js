@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const urlPrefix = false ? "http://localhost:3010" : ""
+const urlPrefix = true ? "http://localhost:3010" : ""
 
 export function videoSearch(searchTerm) {
     return axios.get( `${urlPrefix}/api/youtube/video?searchTerm=${searchTerm}` )

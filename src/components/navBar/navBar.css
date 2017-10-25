@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 56px;
-    padding: 10px 30px;
+    padding: 10px 15px;
     margin: 0px;
     justify-content: space-between;
 }
@@ -17,6 +17,7 @@
 
 .logo-container {
     width: 200px;
+    margin-right: 32px;
 }
 
 .ham-menu {
