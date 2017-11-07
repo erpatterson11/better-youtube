@@ -71,8 +71,8 @@ class App extends Component {
         <SideMenu />
         <Switch>
             <Route path="/watch" component={VideoPage} />
-            <Route exact path="" component={HomePage} />
-            <Route path="*" component={HomePage} />
+            <Route path="/home" component={HomePage} />
+            <Route path="*" component={VideoPage} />
         </Switch>
         <NavBar videoSearch={this.props.getVideosSearch} setBrowse={this.props.setBrowse} searchResults={this.props.videos.searchResults} setVideo={this.handleSetVideo} />
       </div>
