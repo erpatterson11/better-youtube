@@ -58,8 +58,6 @@ class NavBar extends Component {
 
     render() {
 
-        // const loginUrl = false ? "http://localhost:3010" : "https://youtubeclone.ericcpatterson.com"
-
         let style = {
             height: "36px"
         }
@@ -127,6 +125,7 @@ class NavBar extends Component {
                         label="Sign In" 
                         labelStyle={{color: "rgb(255,0,0)"}}
                         hoverColor={"rgb(255,255,255)"}
+                        disabled={true}
                         onClick={() => window.location.href=`/login`} 
                     />
                 </div>
