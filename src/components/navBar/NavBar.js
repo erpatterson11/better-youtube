@@ -9,6 +9,7 @@ import SearchResults from '../searchResults/SearchResults'
 
 import IconButton from 'material-ui/IconButton';
 import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
 
@@ -18,6 +19,9 @@ import YtRedLogo from '../../images/youtube-red-logo'
 
 import SearchIcon from 'material-ui/svg-icons/action/search'
 import Menu from 'material-ui/svg-icons/navigation/menu'
+import MoreVert from 'material-ui/svg-icons/navigation/more-vert'
+import Apps from 'material-ui/svg-icons/navigation/apps'
+import FileUpload from 'material-ui/svg-icons/file/file-upload'
 
 
 import "./navBar.css"
@@ -54,7 +58,7 @@ class NavBar extends Component {
 
     render() {
 
-        const loginUrl = true ? "http://localhost:3000" : ""
+        // const loginUrl = false ? "http://localhost:3010" : "https://youtubeclone.ericcpatterson.com"
 
         let style = {
             height: "36px"
@@ -65,10 +69,10 @@ class NavBar extends Component {
 
                 <div className='logo-container flex-cont'>
                     <IconButton icon  onClick={this.props.toggleDock} >
-                        <Menu  color="rgba(17,17,17,0.4" />
+                        <Menu  color="rgba(17,17,17,0.4)" />
                     </IconButton>
                   
-                    <Link to="">
+                    <Link to="/home">
                         <YtLogo height="24px" />
                     </Link>                    
                 </div>
@@ -108,11 +112,22 @@ class NavBar extends Component {
                 </div>
 
                 <div className="action-container flex-cont">
-                    <RaisedButton 
-                        backgroundColor="#167ac6" 
+                    <IconButton icon >
+                        <FileUpload  color="rgba(17,17,17,0.4)" />
+                    </IconButton>
+                    <IconButton icon >
+                        <Apps  color="rgba(17,17,17,0.4)" />
+                    </IconButton>
+                    <IconButton icon >
+                        <MoreVert  color="rgba(17,17,17,0.4)" />
+                    </IconButton>
+
+
+                    <FlatButton  
                         label="Sign In" 
-                        labelColor="#ffffff" 
-                        onClick={() => window.location.href=`${loginUrl}/login`} 
+                        labelStyle={{color: "rgb(255,0,0)"}}
+                        hoverColor={"rgb(255,255,255)"}
+                        onClick={() => window.location.href=`/login`} 
                     />
                 </div>
 
