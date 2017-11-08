@@ -72,7 +72,7 @@ class NavBar extends Component {
                         <Menu  color="rgba(17,17,17,0.4)" />
                     </IconButton>
                   
-                    <Link to="/">
+                    <Link to="/home">
                         <YtLogo height="24px" />
                     </Link>                    
                 </div>
