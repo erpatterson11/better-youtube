@@ -16,11 +16,7 @@ const VideoPlayer = ({video, minify}) => {
         zIndex: 100000
     }
 
-    let id
-
-    if (video.id) {
-        id = video.id
-    }
+    const id = video.id || ""
 
     return (
         <div className="video-player-container card" style={minify ? browseStyle : null} >

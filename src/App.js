@@ -29,33 +29,10 @@ class App extends Component {
         open: false
       }
 
-      this.handleScroll = this.handleScroll.bind(this)
       this.handleSetVideo = this.handleSetVideo.bind(this)
   }
 
-  // React lifestyle methods
-  componentDidMount() {
-      window.addEventListener('scroll', this.handleScroll)
-  }
-
-  componentWillUnmount() {
-      window.removeEventListener('scroll', this.handleScroll)
-  }
-
-  // Custom methods
-  handleScroll(e) {
-      let top = e.srcElement.scrollingElement.scrollTop
-      let totalHeight = document.documentElement.scrollHeight
-      let clientHeight = document.documentElement.clientHeight
-
-      if (top > 15 && this.props.browse.browsing === false) this.props.setBrowse(true)
-      else if (top < 15 && this.props.browse.browsing) this.props.setBrowse(false)
-      if (this.props.videos.selectedVideo.hasOwnProperty('id') && totalHeight == top + clientHeight) {
-        this.props.getVideoComments(this.props.videos.selectedVideo.id, this.props.videos.selectedVideoNextCommentsToken)
-      }
-  }
-
-  handleSetVideo = (video) => {
+  handleSetVideo(video) {
     console.log(video.id.videoId)
     this.props.getVideoStats(video.id.videoId)
     this.props.setBrowse(false)
@@ -67,7 +44,6 @@ class App extends Component {
 
     return (
       <div className="App" >
-      
         <SideMenu />
         <Switch>
             <Route path="/watch" component={VideoPage} />

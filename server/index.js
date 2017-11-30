@@ -7,8 +7,7 @@ const massive = require('massive')
 const {json} = require('body-parser')
 const cors = require('cors')
 const session = require('express-session')
-// const passport = require('passport')
-// const Auth0Strategy = require('passport-auth0')
+
 const google = require('googleapis')
 const youtube = google.youtube('v3')
 
@@ -48,6 +47,7 @@ app.use(session({
 //////////////////////////////////////////////
 // YOUTUBE OAUTH2
 //////////////////////////////////////////////
+
 
 const OAuth2 = google.auth.OAuth2
 const oauth2Client = new OAuth2(
