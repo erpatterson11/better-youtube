@@ -98,6 +98,10 @@ app.get('/api/youtube/video/:id', controller.getVideoStatsById)
 app.get('/api/youtube/videoPageDetails', controller.getVideoPageDetails)
 
 
+app.get("*", (req,res,next) => {
+  res.sendFile(`${__dirname}/../build/index.html`)
+})
+
 //////////////////////////////////////////////
 // AUTHENTICATION ENDPOINTS
 //////////////////////////////////////////////

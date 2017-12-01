@@ -126,7 +126,7 @@ class NavBar extends Component {
                         label="Sign In" 
                         labelStyle={{color: "rgb(255,0,0)"}}
                         hoverColor={"rgb(255,255,255)"}
-                        onClick={() => axios.get('/login').then(console.log)} 
+                        onClick={() => window.location.href = "/login"} 
                     />
                 </div>
 
