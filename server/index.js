@@ -27,7 +27,7 @@ const ytApiConf = config.youtube.web
 
 const app = module.exports = express()
 
- // app.use(express.static(`../build`))
+ app.use(express.static(`../build`))
 
 // middleware
 app.use(json())

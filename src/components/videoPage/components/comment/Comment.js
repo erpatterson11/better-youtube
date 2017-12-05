@@ -57,21 +57,22 @@ class Comment extends Component {
         const showMoreCommentStyle = this.state.showingMore ? {height: "auto", overflowY: "auto"} : {maxHeight: 85, overflowY: "hidden"}
         const showMoreLabel = this.state.showingMore ? "Show less" : "Show more"
 
+        const { authorProfileImageUrl, authorDisplayName, textOriginal, likeCount} = comment.topLevelComment.snippet
 
 
         return (
             <div className="comment-component">
                     <div  className="comment-avatar" >
-                        <Avatar src={comment.topLevelComment.snippet.authorProfileImageUrl} />
+                        <Avatar src={authorProfileImageUrl} />
                     </div> 
                     <div className="comment-text-container" >
                         <div className="comment-author-date-cont" >
-                            <p className="comment-author" > { comment.topLevelComment.snippet.authorDisplayName } </p>
+                            <p className="comment-author" > { authorDisplayName } </p>
                             <p className="comment-time-ago" > { publishedAgo } </p>
                         </div>
                         <div style={showMoreStyle}>
                             <p style={showMoreCommentStyle} ref="commentText" className="comment-text" > 
-                                { comment.topLevelComment.snippet.textOriginal } 
+                                { textOriginal } 
                             </p>
                         { this.state.commentHeight >= 85 &&
                             <p className="comment-show-more-label" onClick={() => this.setState({showingMore: !this.state.showingMore})}>{showMoreLabel}</p>
@@ -79,7 +80,7 @@ class Comment extends Component {
                         </div>
                         <div className="comment-action-container">
                             <p className="comment-reply-link"> REPLY </p>
-                            <p> { comment.topLevelComment.snippet.likeCount } </p>
+                            <p> { likeCount } </p>
                             <ThumbUp className="comment-thumb" height="16px" color={color} hoverColor={hoverColor}  />
                             <ThumbDown className="comment-thumb" height="16px" color={color} hoverColor={hoverColor} />
                         </div>  

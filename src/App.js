@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 // redux actions
 import * as videoReducerActions from './store/reducers/selectedVideoReducer'
+import * as windowSizeActions from './store/reducers/windowSizeReducer'
 import { setBrowse } from './store/reducers/browseReducer'
 
 // components
@@ -30,10 +31,35 @@ class App extends Component {
       }
 
       this.handleSetVideo = this.handleSetVideo.bind(this)
+      this.handleResize = Util.debounce(this.handleResize.bind(this),100)
+      this.handleScroll = Util.debounce(this.handleScroll.bind(this),100)
+      
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize) 
+    window.addEventListener('scroll', this.handleScroll) 
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize )
+    window.removeEventListener('scroll', this.handleScroll )
+  }
+
+  // Custom methods
+  handleScroll(e) {
+      let top = e.srcElement.scrollingElement.scrollTop
+      this.props.handleScroll(top)
+  }
+
+  handleResize() {
+    this.props.handleResize({ 
+      width: document.documentElement.clientWidth, 
+      height: document.documentElement.clientHeight 
+    })
   }
 
   handleSetVideo(video) {
-    console.log(video.id.videoId)
     this.props.getVideoStats(video.id.videoId)
     this.props.setBrowse(false)
     this.props.getChannelStats(video.snippet.channelId)
@@ -41,7 +67,6 @@ class App extends Component {
   }
 
   render() {
-
     return (
       <div className="App" >
         <SideMenu />
@@ -50,7 +75,12 @@ class App extends Component {
             <Route path="/home" component={HomePage} />
             <Route path="*" component={VideoPage} />
         </Switch>
-        <NavBar videoSearch={this.props.getVideosSearch} setBrowse={this.props.setBrowse} searchResults={this.props.videos.searchResults} setVideo={this.handleSetVideo} />
+        <NavBar 
+          videoSearch={this.props.getVideosSearch} 
+          setBrowse={this.props.setBrowse} 
+          searchResults={this.props.videos.searchResults} 
+          setVideo={this.handleSetVideo} 
+        />
       </div>
     )
   }
@@ -64,4 +94,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {...videoReducerActions, setBrowse})(App)
+export default connect(mapStateToProps, {...videoReducerActions, ...windowSizeActions, setBrowse})(App)

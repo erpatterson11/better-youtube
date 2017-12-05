@@ -24,28 +24,36 @@ import './comments.css'
 
 // Component
 export default class Comments extends Component {
-
-    shouldComponentUpdate(nextProps) {
-        return nextProps.comments !== this.props.comments
+    constructor() {
+        super()
     }
+
+    // shouldComponentUpdate(nextProps) {
+    //     return nextProps.comments !== this.props.comments
+    // }
 
     render() {
 
-        let displayComments = () => this.props.comments.map( (comment,i) => <Comment key={i + comment.id} comment={comment.snippet} publishedAgo={moment( moment(comment.publishedAt) ).fromNow()} />)        
+        const { video, comments, loading } = this.props
 
-        if (this.props.loading || this.props.comments.length === 0) return <div className="progress-container"><CircularProgress /></div>
+        const displayComments = () => comments.map( (comment,i) => <Comment key={i + comment.id} comment={comment.snippet} publishedAgo={moment( moment(comment.publishedAt) ).fromNow()} />)        
+        
+        const commentCount = video.statistics ? video.statistics.commentCount : 0
+
+        console.log(loading)
 
         return (
             <div className="comments card">
                 <div className="comments-toolbar"> 
-                    <p className="comments-total">{ Util.formatCounterText(this.props.video.statistics.commentCount) } Comments</p>
+                    <p className="comments-total">{ Util.formatCounterText(commentCount) } Comments</p>
                     <IconMenu iconButtonElement={<IconButton><Sort color="rgba(17,17,17,0.4)" /></IconButton>} >
                         <MenuItem primaryText="Top comments" />
                         <MenuItem primaryText="Newest first" />
                     </IconMenu>
                 </div>
                 <CommentEntry />
-                { Object.keys(this.props.comments).length > 0 ? displayComments() : "" }
+                { Object.keys(comments).length > 0  && displayComments() }
+                {loading===true && <div className="progress-container"><CircularProgress /></div> }
             </div>
         )
     }

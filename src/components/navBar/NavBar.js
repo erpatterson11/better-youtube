@@ -121,12 +121,11 @@ class NavBar extends Component {
                         <MoreVert  color="rgba(17,17,17,0.4)" />
                     </IconButton>
 
-
                     <FlatButton  
                         label="Sign In" 
                         labelStyle={{color: "rgb(255,0,0)"}}
                         hoverColor={"rgb(255,255,255)"}
-                        onClick={() => window.location.href = "/login"} 
+                        onClick={() => window.location.href = "http://localhost:3010/login"} 
                     />
                 </div>
 

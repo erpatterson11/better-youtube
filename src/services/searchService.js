@@ -10,7 +10,6 @@ export function videoSearch(searchTerm) {
 export function getVideoComments(videoId, nextPageToken) {
     return axios.get( `/api/youtube/comments?videoId=${videoId}&nextPageToken=${nextPageToken}` )
         .then( res => {
-            console.log('comments', res.data)
             return res.data
         })
 }
@@ -18,7 +17,6 @@ export function getVideoComments(videoId, nextPageToken) {
 export function getVideoReplyComments(commentId) {
     return axios.get(`/api/youtube/commentReplies?commentId=${commentId}`)
         .then( res => {
-            console.log('comment replies: ', res.data)
             return res.data
         })
 }
