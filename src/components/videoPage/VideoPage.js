@@ -1,85 +1,124 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import * as videoReducerActions from '../../store/reducers/selectedVideoReducer'
-import * as browseReducerActions from '../../store/reducers/browseReducer'
+import * as videoReducerActions from "../../store/reducers/selectedVideoReducer";
+import * as browseReducerActions from "../../store/reducers/browseReducer";
+import { setVidPlaceholderPos } from '../../store/reducers/windowSizeReducer'
 
-import VideoPlayer from '../videoPlayer/VideoPlayer'
-import VideoInfo from './components/videoInfo/VideoInfo'
-import VideoDesc from './components/videoDesc/VideoDesc'
-import Comments from './components/comments/Comments'
-import SuggestionBar from './components/suggestionBar/SuggestionBar'
+import VideoPlayer from "../videoPlayer/VideoPlayer";
+import VideoInfo from "./components/videoInfo/VideoInfo";
+import VideoDesc from "./components/videoDesc/VideoDesc";
+import Comments from "./components/comments/Comments";
+import SuggestionBar from "./components/suggestionBar/SuggestionBar";
 
-import Util from './../../services/funcsService'
+import Util from "./../../services/funcsService";
 
-import "./videoPage.css"
-
+import "./videoPage.css";
 
 class VideoPage extends Component {
   constructor(props) {
-    super(props)
-    this.state = {}
+    super(props);
+    this.state = {};
 
-    this.handleScroll = Util.debounce(this.handleScroll.bind(this),50)
+    this.handleScroll = Util.debounce(this.handleScroll.bind(this), 50);
+    this.updateVideoPlayerPlaceholderCoordinates = this.updateVideoPlayerPlaceholderCoordinates.bind(this)
   }
-  
-  // React lifestyle methods
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll) 
-      }
 
-  componentWillUnmount() {
-      window.removeEventListener('scroll', this.handleScroll )
+  componentDidMount() {
+    this.updateVideoPlayerPlaceholderCoordinates()
   }
 
   // Custom methods
   handleScroll() {
 
-    // TODO: separate comment request (debounced) and setBrowse check (not debounced) to improve responsiveness of video switching
-    // maybe move setBrowse check to video player component and check for browse based on route?
+    let top = this.props.windowDimensions.scrollTop;
+    let totalHeight = document.documentElement.scrollHeight;
+    let clientHeight = document.documentElement.clientHeight;
 
-      let top = this.props.windowDimensions.scrollTop
-      let totalHeight = document.documentElement.scrollHeight
-      let clientHeight = document.documentElement.clientHeight
-      if (top > 15 && this.props.browse.browsing === false) this.props.setBrowse(true)
-      else if (top < 15 && this.props.browse.browsing) this.props.setBrowse(false)
-      if (
-          this.props.videos.selectedVideo.hasOwnProperty('id') && 
-          !this.props.videos.commentsLoading && 
-          totalHeight - 150 < top + clientHeight 
-        ) {
-        this.props.getVideoComments(this.props.videos.selectedVideo.id, this.props.videos.selectedVideoNextCommentsToken)
-      }
+    // if there is a video selected and comments aren't loading and user is near the bottom of the screen
+    // then request next page of comments
+
+    if (
+      this.props.videos.selectedVideo.hasOwnProperty("id") &&
+      !this.props.videos.commentsLoading &&
+      totalHeight - 150 < top + clientHeight
+    ) {
+      this.props.getVideoComments(
+        this.props.videos.selectedVideo.id,
+        this.props.videos.selectedVideoNextCommentsToken
+      );
+    }
+  }
+
+  updateVideoPlayerPlaceholderCoordinates() {
+    const dim = this.vidPlaceholder.getBoundingClientRect()
+    this.props.setVidPlaceholderPos(dim)
   }
 
   componentWillReceiveProps(nextProps) {
-    let nextTop = nextProps.windowDimensions.scrollTop
-    if (nextTop !== this.props.windowDimensions.scrollTop) {
-      this.handleScroll(nextTop)
+    const { scrollTop, windowDim, vidPlaceholder } = this.props.windowDimensions
+
+    let nextTop = nextProps.windowDimensions.scrollTop;
+    if (nextTop !== scrollTop) {
+      this.handleScroll(nextTop);
     }
+    let nextWidth = nextProps.windowDimensions.windowDim.width
+    let dim = this.vidPlaceholder.getBoundingClientRect()
+    console.log(dim.left, vidPlaceholder.left);
+    if ( dim.left !==  vidPlaceholder.left || dim.top !== vidPlaceholder.top) {
+      this.updateVideoPlayerPlaceholderCoordinates()
+    }
+
+    // let {left,top} = nextProps.windowDimensions.vidPlaceholder
+    // if (
+    //   left !== this.props.windowDimensions.vidPlaceholder.left || 
+    //   top !== this.props.windowDimensions.vidPlaceholder.top
+    // ) {
+    // }
   }
 
   render() {
-    const { selectedVideo, selectedVideoComments, commentsLoading, suggestedVideos, videoChannelProfile, selectedVideoNextCommentsToken } = this.props.videos
-    const { browsing } = this.props.browse
-    const { getVideoStats, getVideoSuggestions, getChannelStats, getMoreVideoComments } = this.props
+    const {
+      selectedVideo,
+      selectedVideoComments,
+      commentsLoading,
+      suggestedVideos,
+      videoChannelProfile,
+      selectedVideoNextCommentsToken
+    } = this.props.videos;
+    const { browsing } = this.props.browse;
+    const {
+      getVideoStats,
+      getVideoSuggestions,
+      getChannelStats,
+      getMoreVideoComments
+    } = this.props;
 
-    const handleSetVideo = (video) => {
-      getVideoStats(video.id.videoId)
-      getVideoSuggestions( video.id.videoId )
-      getChannelStats( video.snippet.channelId )
-    }
+    const handleSetVideo = video => {
+      getVideoStats(video.id.videoId);
+      getVideoSuggestions(video.id.videoId);
+      getChannelStats(video.snippet.channelId);
+    };
 
     return (
       <div className="video-page-container card-grid">
-          <div ref="vidPlaceholder" className="video-player-placeholder"></div>
-          <VideoPlayer minify={browsing} video={selectedVideo} />
-          <VideoInfo vidInfo={selectedVideo} />
-          <VideoDesc vidInfo={selectedVideo} channel={videoChannelProfile} />
-          <Comments video={selectedVideo} comments={selectedVideoComments} loading={commentsLoading} getMoreComments={() => getMoreVideoComments(selectedVideo.id, selectedVideoNextCommentsToken)}/>
-          <SuggestionBar setVideo={handleSetVideo} suggested={suggestedVideos} />
+        <div ref={ref => this.vidPlaceholder = ref} className="video-player-placeholder" />
+        <VideoInfo vidInfo={selectedVideo} />
+        <VideoDesc vidInfo={selectedVideo} channel={videoChannelProfile} />
+        <Comments
+          video={selectedVideo}
+          comments={selectedVideoComments}
+          loading={commentsLoading}
+          getMoreComments={() =>
+            getMoreVideoComments(
+              selectedVideo.id,
+              selectedVideoNextCommentsToken
+            )
+          }
+        />
+        <SuggestionBar setVideo={handleSetVideo} suggested={suggestedVideos} />
       </div>
-    )
+    );
   }
 }
 
@@ -88,8 +127,11 @@ function mapStateToProps(state) {
     videos: state.selectedVideoReducer,
     browse: state.browseReducer,
     windowDimensions: state.windowSizeReducer
-  }
+  };
 }
 
-export default connect(mapStateToProps, {...browseReducerActions, ...videoReducerActions})(VideoPage)
-
+export default connect(mapStateToProps, {
+  ...browseReducerActions,
+  ...videoReducerActions,
+  setVidPlaceholderPos
+})(VideoPage);

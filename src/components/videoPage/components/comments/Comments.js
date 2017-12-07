@@ -40,8 +40,6 @@ export default class Comments extends Component {
         
         const commentCount = video.statistics ? video.statistics.commentCount : 0
 
-        console.log(loading)
-
         return (
             <div className="comments card">
                 <div className="comments-toolbar"> 

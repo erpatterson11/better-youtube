@@ -16,4 +16,14 @@ const allReducers = combineReducers({
 })
 
 
-export default (createStore( allReducers , composeWithDevTools(applyMiddleware( promiseMiddleware() ))))
+const store = createStore( allReducers , composeWithDevTools( applyMiddleware( promiseMiddleware() ) ) )
+
+// if (process.env.NODE_ENV !== "production") {
+//     if (module.hot) {
+//       module.hot.accept(allReducers, () => {
+//         store.replaceReducer(rootReducer);
+//       });
+//     }
+//   }
+
+export default store

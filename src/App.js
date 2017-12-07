@@ -32,13 +32,15 @@ class App extends Component {
 
       this.handleSetVideo = this.handleSetVideo.bind(this)
       this.handleResize = Util.debounce(this.handleResize.bind(this),100)
-      this.handleScroll = Util.debounce(this.handleScroll.bind(this),100)
+      this.handleScroll = this.handleScroll.bind(this)
       
   }
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResize) 
     window.addEventListener('scroll', this.handleScroll) 
+    // initialized window dimensions in redux
+    this.handleResize()
   }
 
   componentWillUnmount() {
@@ -48,7 +50,7 @@ class App extends Component {
 
   // Custom methods
   handleScroll(e) {
-      let top = e.srcElement.scrollingElement.scrollTop
+      let top = document.documentElement.scrollTop
       this.props.handleScroll(top)
   }
 
@@ -75,6 +77,7 @@ class App extends Component {
             <Route path="/home" component={HomePage} />
             <Route path="*" component={VideoPage} />
         </Switch>
+        { <VideoPlayer /> }    
         <NavBar 
           videoSearch={this.props.getVideosSearch} 
           setBrowse={this.props.setBrowse} 
