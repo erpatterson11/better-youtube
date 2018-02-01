@@ -44,7 +44,6 @@ class VideoCarousel extends Component {
     }
 
     componentDidMount() {
-        console.log(this.refs.carousel.clientWidth);
 
     }
 
