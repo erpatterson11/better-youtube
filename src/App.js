@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 // redux actions
 import * as videoReducerActions from './store/reducers/selectedVideoReducer'
+import * as windowSizeActions from './store/reducers/windowSizeReducer'
 import { setBrowse } from './store/reducers/browseReducer'
 
 // components
@@ -29,34 +30,38 @@ class App extends Component {
         open: false
       }
 
-      this.handleScroll = this.handleScroll.bind(this)
       this.handleSetVideo = this.handleSetVideo.bind(this)
+      this.handleResize = Util.debounce(this.handleResize.bind(this),100)
+      this.handleScroll = this.handleScroll.bind(this)
+      
   }
 
-  // React lifestyle methods
   componentDidMount() {
-      window.addEventListener('scroll', this.handleScroll)
+    window.addEventListener('resize', this.handleResize) 
+    window.addEventListener('scroll', this.handleScroll) 
+    // initialized window dimensions in redux
+    this.handleResize()
   }
 
   componentWillUnmount() {
-      window.removeEventListener('scroll', this.handleScroll)
+    window.removeEventListener('resize', this.handleResize )
+    window.removeEventListener('scroll', this.handleScroll )
   }
 
   // Custom methods
   handleScroll(e) {
-      let top = e.srcElement.scrollingElement.scrollTop
-      let totalHeight = document.documentElement.scrollHeight
-      let clientHeight = document.documentElement.clientHeight
-
-      if (top > 15 && this.props.browse.browsing === false) this.props.setBrowse(true)
-      else if (top < 15 && this.props.browse.browsing) this.props.setBrowse(false)
-      if (this.props.videos.selectedVideo.hasOwnProperty('id') && totalHeight == top + clientHeight) {
-        this.props.getVideoComments(this.props.videos.selectedVideo.id, this.props.videos.selectedVideoNextCommentsToken)
-      }
+      let top = document.documentElement.scrollTop
+      this.props.handleScroll(top)
   }
 
-  handleSetVideo = (video) => {
-    console.log(video.id.videoId)
+  handleResize() {
+    this.props.handleResize({ 
+      width: document.documentElement.clientWidth, 
+      height: document.documentElement.clientHeight 
+    })
+  }
+
+  handleSetVideo(video) {
     this.props.getVideoStats(video.id.videoId)
     this.props.setBrowse(false)
     this.props.getChannelStats(video.snippet.channelId)
@@ -64,17 +69,21 @@ class App extends Component {
   }
 
   render() {
-
     return (
       <div className="App" >
-      
         <SideMenu />
         <Switch>
             <Route path="/watch" component={VideoPage} />
             <Route path="/home" component={HomePage} />
             <Route path="*" component={VideoPage} />
         </Switch>
-        <NavBar videoSearch={this.props.getVideosSearch} setBrowse={this.props.setBrowse} searchResults={this.props.videos.searchResults} setVideo={this.handleSetVideo} />
+        { <VideoPlayer /> }    
+        <NavBar 
+          videoSearch={this.props.getVideosSearch} 
+          setBrowse={this.props.setBrowse} 
+          searchResults={this.props.videos.searchResults} 
+          setVideo={this.handleSetVideo} 
+        />
       </div>
     )
   }
@@ -88,4 +97,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {...videoReducerActions, setBrowse})(App)
+export default connect(mapStateToProps, {...videoReducerActions, ...windowSizeActions, setBrowse})(App)

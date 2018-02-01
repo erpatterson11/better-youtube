@@ -37,7 +37,16 @@ const Util =  {
             timeout = setTimeout(later, wait)
             if (callNow) func.apply(context, args)
         }
-    }
+    },
+    throttle: (func, wait)=> {
+        var time = Date.now();
+        return function() {
+          if ((time + (wait || 100) - Date.now()) < 0) {
+            func();
+            time = Date.now();
+          }
+        }
+      }
 } 
 
 

@@ -17,6 +17,11 @@
   margin-top: 80px;
 }
 
+.video-player-placeholder {
+  grid-area: video;
+  height: 100%;
+}
+
 
 
 /* ///////////////////////////////////////////

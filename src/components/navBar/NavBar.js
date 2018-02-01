@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 import * as DockActions from '../../store/reducers/dockReducer'
 import { getVideoSuggestions } from '../../store/reducers/selectedVideoReducer'
@@ -120,13 +121,11 @@ class NavBar extends Component {
                         <MoreVert  color="rgba(17,17,17,0.4)" />
                     </IconButton>
 
-
                     <FlatButton  
                         label="Sign In" 
                         labelStyle={{color: "rgb(255,0,0)"}}
                         hoverColor={"rgb(255,255,255)"}
-                        disabled={true}
-                        onClick={() => window.location.href=`/login`} 
+                        onClick={() => window.location.href = "http://localhost:3010/login"} 
                     />
                 </div>
 

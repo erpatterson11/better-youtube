@@ -1,7 +1,9 @@
 .video-player-container {
-    transform-origin: bottom right;
-    /*grid-area: video;*/
+    top: 0;
+    left: 0;
     transition: 0.3s;
+    position: fixed;
+    z-index: 100;    
 }
 
 .video-player {
@@ -9,12 +11,6 @@
     height: 480px;
     border: none;
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
-}
-
-.video-player-placeholder {
-  grid-area: video;
-  height: 100%;
-  position: absolute;
 }
 
 

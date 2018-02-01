@@ -7,8 +7,7 @@ const massive = require('massive')
 const {json} = require('body-parser')
 const cors = require('cors')
 const session = require('express-session')
-// const passport = require('passport')
-// const Auth0Strategy = require('passport-auth0')
+
 const google = require('googleapis')
 const youtube = google.youtube('v3')
 
@@ -28,7 +27,7 @@ const ytApiConf = config.youtube.web
 
 const app = module.exports = express()
 
- // app.use(express.static(`../build`))
+ app.use(express.static(`../build`))
 
 // middleware
 app.use(json())
@@ -48,6 +47,7 @@ app.use(session({
 //////////////////////////////////////////////
 // YOUTUBE OAUTH2
 //////////////////////////////////////////////
+
 
 const OAuth2 = google.auth.OAuth2
 const oauth2Client = new OAuth2(
@@ -97,6 +97,10 @@ app.get('/api/youtube/video/:id', controller.getVideoStatsById)
 
 app.get('/api/youtube/videoPageDetails', controller.getVideoPageDetails)
 
+const path = require("path")
+app.get("*", (req,res,next) => {
+  res.sendFile(path.join(__dirname,`/../build/index.html`))
+})
 
 //////////////////////////////////////////////
 // AUTHENTICATION ENDPOINTS
