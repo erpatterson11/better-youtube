@@ -49,7 +49,6 @@ class HomePage extends Component {
             this.props.getVideoStats(video.id.videoId)
             this.props.getVideoSuggestions( video.id.videoId )
             this.props.getChannelStats( video.snippet.channelId )
-            console.log(video);
         }
 
         return (

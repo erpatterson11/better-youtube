@@ -40,7 +40,7 @@ class Comment extends Component {
 
     getVideoReplyComments() {
         getVideoReplyComments(this.props.comment.topLevelComment.id)
-            .then( comments => this.setState({commentReplies: comments}, () => console.log(this.state)) )
+            .then( comments => this.setState({commentReplies: comments}) )
     }
     
     // Render
