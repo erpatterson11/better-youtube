@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import moment from 'moment'
 
 // Services
-
 import Util from '../../../../services/funcsService'
 
 // Custom components
@@ -21,16 +20,23 @@ import Paper from 'material-ui/Paper'
 // CSS
 import './comments.css'
 
-
 // Component
 export default class Comments extends Component {
-    constructor() {
-        super()
+    componentDidMount() {
+        let commentBottom = this.commentsBottom.getBoundingClientRect().top
+        this.props.getCommentBottomHeight(commentBottom)
     }
 
-    // shouldComponentUpdate(nextProps) {
-    //     return nextProps.comments !== this.props.comments
-    // }
+    componentWillUpdate(nextProps) {
+        // console.log(deepDiffMapper.map(this.props, nextProps))
+    }
+
+    componentDidUpdate() {
+        let commentBottom = Util.getOffsetTop(this.commentsBottom)
+        if (this.props.commentHeight !== commentBottom) {
+            this.props.getCommentBottomHeight(commentBottom)
+        }
+    }
 
     render() {
 
@@ -52,6 +58,7 @@ export default class Comments extends Component {
                 <CommentEntry />
                 { Object.keys(comments).length > 0  && displayComments() }
                 {loading===true && <div className="progress-container"><CircularProgress /></div> }
+                <div ref={ref => this.commentsBottom = ref}></div>
             </div>
         )
     }

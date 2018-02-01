@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import * as videoReducerActions from "../../store/reducers/selectedVideoReducer";
 import * as browseReducerActions from "../../store/reducers/browseReducer";
 import { setVidPlaceholderPos } from '../../store/reducers/windowSizeReducer'
+import { updateCommentsHeight } from '../../store/reducers/commentsHeightReducer'
 
 import VideoPlayer from "../videoPlayer/VideoPlayer";
 import VideoInfo from "./components/videoInfo/VideoInfo";
@@ -18,7 +19,8 @@ import "./videoPage.css";
 class VideoPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+    };
 
     this.handleScroll = Util.debounce(this.handleScroll.bind(this), 50);
     this.updateVideoPlayerPlaceholderCoordinates = this.updateVideoPlayerPlaceholderCoordinates.bind(this)
@@ -34,6 +36,7 @@ class VideoPage extends Component {
     let top = this.props.windowDimensions.scrollTop;
     let totalHeight = document.documentElement.scrollHeight;
     let clientHeight = document.documentElement.clientHeight;
+    let videoCommentsHeight = this.props.commentsHeight.commentsHeight
 
     // if there is a video selected and comments aren't loading and user is near the bottom of the screen
     // then request next page of comments
@@ -41,7 +44,7 @@ class VideoPage extends Component {
     if (
       this.props.videos.selectedVideo.hasOwnProperty("id") &&
       !this.props.videos.commentsLoading &&
-      totalHeight - 150 < top + clientHeight
+      videoCommentsHeight < top + clientHeight
     ) {
       this.props.getVideoComments(
         this.props.videos.selectedVideo.id,
@@ -86,11 +89,13 @@ class VideoPage extends Component {
       selectedVideoNextCommentsToken
     } = this.props.videos;
     const { browsing } = this.props.browse;
+    const { commentsHeight } = this.props.commentsHeight
     const {
       getVideoStats,
       getVideoSuggestions,
       getChannelStats,
-      getMoreVideoComments
+      getMoreVideoComments,
+      updateCommentsHeight
     } = this.props;
 
     const handleSetVideo = video => {
@@ -114,6 +119,8 @@ class VideoPage extends Component {
               selectedVideoNextCommentsToken
             )
           }
+          getCommentBottomHeight={updateCommentsHeight}
+          commentHeight={commentsHeight}
         />
         <SuggestionBar setVideo={handleSetVideo} suggested={suggestedVideos} />
       </div>
@@ -125,12 +132,14 @@ function mapStateToProps(state) {
   return {
     videos: state.selectedVideoReducer,
     browse: state.browseReducer,
-    windowDimensions: state.windowSizeReducer
+    windowDimensions: state.windowSizeReducer,
+    commentsHeight: state.commentsHeightReducer
   };
 }
 
 export default connect(mapStateToProps, {
   ...browseReducerActions,
   ...videoReducerActions,
-  setVidPlaceholderPos
+  setVidPlaceholderPos,
+  updateCommentsHeight
 })(VideoPage);
