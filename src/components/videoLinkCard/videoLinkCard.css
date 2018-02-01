@@ -3,7 +3,6 @@ Horizonal Styling
 */
 
 .video-link-card {
-    cursor: pointer;
     display: flex;
     margin-bottom: 8px;
 }
@@ -21,6 +20,7 @@ Horizonal Styling
     height: 94px;
     margin-right: 10px;
     background-size: cover;
+    cursor: pointer;
 }
  
 .video-link-title {
@@ -30,6 +30,7 @@ Horizonal Styling
     font-weight: 500;
     color: rgb(17,17,17);
     margin-bottom: 4px;
+    cursor: pointer;
 }
 
 .video-link-title-container {
