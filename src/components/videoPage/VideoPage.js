@@ -64,7 +64,6 @@ class VideoPage extends Component {
     }
     let nextWidth = nextProps.windowDimensions.windowDim.width
     let dim = this.vidPlaceholder.getBoundingClientRect()
-    console.log(dim.left, vidPlaceholder.left);
     if ( dim.left !==  vidPlaceholder.left || dim.top !== vidPlaceholder.top) {
       this.updateVideoPlayerPlaceholderCoordinates()
     }
